@@ -11,14 +11,14 @@ import Events from "../Events/Events";
 
 const EventLocation = () => {
   return (
-    <div className="py-6">
+    <div className="px-12  py-6 bg-stone-200">
       <div className="flex justify-between items-center ">
         <h2 className="flex font-bold text-2xl ">
           New Events In{" "}
           <span className="ml-4">
             <Select>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Theme" className="text-yellow-200" />
+              <SelectTrigger className="w-[180px] bg-yellow-200">
+                <SelectValue placeholder="Theme" className="text-yellow-200 " />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="light">Nairobi</SelectItem>
@@ -33,7 +33,7 @@ const EventLocation = () => {
         </div>
       </div>
 
-      {/* //////// */}
+      {/* Events*/}
       <div className="flex justify-center items-center py-6">
         <Events />
       </div>

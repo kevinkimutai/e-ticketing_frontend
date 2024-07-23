@@ -7,16 +7,15 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col  px-12 py-2">
+    <main className="flex min-h-screen flex-col py-2">
       {/* Header */}
       <Header />
       {/* Banner */}
       <Banner />
       {/* Search */}
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center px-12 ">
         <Search />
       </div>
-
       {/* Event Location */}
       <EventLocation />
     </main>

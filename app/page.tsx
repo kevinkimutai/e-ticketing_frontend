@@ -1,6 +1,8 @@
 import Banner from "@/components/Banner/Banner";
+import Categories from "@/components/Categories/Categories";
 import EventLocation from "@/components/EventLocation/EventLocation";
 import Events from "@/components/Events/Events";
+import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import { Search } from "@/components/Search/Search";
 import Image from "next/image";
@@ -18,6 +20,12 @@ export default function Home() {
       </div>
       {/* Event Location */}
       <EventLocation />
+
+      {/* Categories */}
+      <Categories />
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }

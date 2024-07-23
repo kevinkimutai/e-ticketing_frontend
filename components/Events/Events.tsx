@@ -42,7 +42,7 @@ const events: Event[] = [
 
 const Events = () => {
   return (
-    <div className="w-4/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-8 py-6">
+    <div className="w-4/5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4 md:gap-8 py-6">
       {events.map((event: Event) => (
         <div
           key={event.title}

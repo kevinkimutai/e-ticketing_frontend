@@ -20,6 +20,7 @@ import Modal from "./Modal";
 import EventName from "../Inputs/Events/EventName";
 import EventCategory from "../Inputs/Events/EventCategory";
 import EventPoster from "../Inputs/Events/EventPoster";
+import EventDate from "../Inputs/Events/EventDate";
 
 enum STEPS {
   NAME = 0,
@@ -31,7 +32,7 @@ enum STEPS {
 }
 
 export function EventModal() {
-  const [step, setStep] = useState<STEPS>(STEPS.POSTER_URL);
+  const [step, setStep] = useState<STEPS>(STEPS.DATES);
   const [event, setEvent] = useState<Event | null>(null);
 
   return (
@@ -62,6 +63,12 @@ export function EventModal() {
           description="A cool poster play a significant role in your events marketing"
         >
           <EventPoster />
+        </Modal>
+      )}
+
+      {step == 3 && (
+        <Modal title="Event Date" description="Your event date & times.">
+          <EventDate />
         </Modal>
       )}
     </Dialog>

@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
+import Modal from "./Modal";
+import EventName from "../Inputs/Events/EventName";
 
 enum STEPS {
   NAME = 0,
@@ -28,43 +30,23 @@ enum STEPS {
 
 export function EventModal() {
   const [step, setStep] = useState<STEPS>(STEPS.NAME);
+  const [event, setEvent] = useState<Event | null>(null);
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button>Ticket Your Event</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Share link</DialogTitle>
-          <DialogDescription>
-            Anyone who has this link will be able to view this.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="flex items-center space-x-2">
-          <div className="grid flex-1 gap-2">
-            <Label htmlFor="link" className="sr-only">
-              Link
-            </Label>
-            <Input
-              id="link"
-              defaultValue="https://ui.shadcn.com/docs/installation"
-              readOnly
-            />
-          </div>
-          <Button type="submit" size="sm" className="px-3">
-            <span className="sr-only">Copy</span>
-            <Copy className="h-4 w-4" />
-          </Button>
-        </div>
-        <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
+
+      {/* Dynamic Inputs Based on Steps */}
+      {step == 0 && (
+        <Modal
+          title="Event Name"
+          description="The name of your event.click next to move to next section"
+        >
+          <EventName />
+        </Modal>
+      )}
     </Dialog>
   );
 }

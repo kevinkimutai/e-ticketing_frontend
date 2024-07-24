@@ -18,6 +18,8 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import Modal from "./Modal";
 import EventName from "../Inputs/Events/EventName";
+import EventCategory from "../Inputs/Events/EventCategory";
+import EventPoster from "../Inputs/Events/EventPoster";
 
 enum STEPS {
   NAME = 0,
@@ -29,7 +31,7 @@ enum STEPS {
 }
 
 export function EventModal() {
-  const [step, setStep] = useState<STEPS>(STEPS.NAME);
+  const [step, setStep] = useState<STEPS>(STEPS.POSTER_URL);
   const [event, setEvent] = useState<Event | null>(null);
 
   return (
@@ -45,6 +47,21 @@ export function EventModal() {
           description="The name of your event.click next to move to next section"
         >
           <EventName />
+        </Modal>
+      )}
+
+      {step == 1 && (
+        <Modal title="Event Category" description="Your event category">
+          <EventCategory />
+        </Modal>
+      )}
+
+      {step == 2 && (
+        <Modal
+          title="Event Poster"
+          description="A cool poster play a significant role in your events marketing"
+        >
+          <EventPoster />
         </Modal>
       )}
     </Dialog>

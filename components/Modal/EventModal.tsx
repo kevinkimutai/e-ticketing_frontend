@@ -3,16 +3,7 @@
 import { Copy } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
@@ -24,6 +15,7 @@ import EventTime from "../Inputs/Events/EventTime";
 import EventDate from "../Inputs/Events/EventDate";
 import EventLocation from "../EventLocation/EventLocation";
 import EventInputLocation from "../Inputs/Events/EventLocation";
+import EventInputMap from "../Inputs/Events/EventInputMap";
 
 enum STEPS {
   NAME = 0,
@@ -37,7 +29,7 @@ enum STEPS {
 }
 
 export function EventModal() {
-  const [step, setStep] = useState<STEPS>(STEPS.LOCATION);
+  const [step, setStep] = useState<STEPS>(STEPS.MAP);
   const [event, setEvent] = useState<Event | null>(null);
 
   return (
@@ -92,9 +84,18 @@ export function EventModal() {
       {step == 6 && (
         <Modal
           title="Event Venue"
-          description="Add a descriptive address to veue"
+          description="Add a descriptive address to venue"
         >
           <EventInputLocation />
+        </Modal>
+      )}
+
+      {step == 7 && (
+        <Modal
+          title="Finally Event Map Location"
+          description="Allow your attendees to use maps for location"
+        >
+          <EventInputMap />
         </Modal>
       )}
     </Dialog>

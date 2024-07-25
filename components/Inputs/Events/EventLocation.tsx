@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import {
@@ -15,12 +17,17 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Copy } from "lucide-react";
-import { DatePickerDemo } from "./DateComponent";
+import { Textarea } from "@/components/ui/textarea";
 
-const EventDate = () => {
+const EventInputLocation = () => {
   return (
     <div>
-      <DatePickerDemo />
+      <div className="flex items-center px-4 py-2">
+        <div className="grid w-full gap-1.5">
+          <Label htmlFor="venue">Venue Address</Label>
+          <Textarea placeholder="venue." id="venue" />
+        </div>
+      </div>
 
       {/* Footer */}
       <DialogFooter className="mt-8">
@@ -37,4 +44,4 @@ const EventDate = () => {
   );
 };
 
-export default EventDate;
+export default EventInputLocation;

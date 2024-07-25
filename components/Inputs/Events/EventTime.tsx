@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 import {
   Dialog,
@@ -14,13 +16,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Copy } from "lucide-react";
-import { DatePickerDemo } from "./DateComponent";
+import { TimePickerDemo } from "@/components/TimePicker/TimePicker";
 
-const EventDate = () => {
+const EventTime = () => {
+  const [date, setDate] = useState<Date | undefined>(undefined);
   return (
     <div>
-      <DatePickerDemo />
+      <TimePickerDemo date={date} setDate={setDate} />
 
       {/* Footer */}
       <DialogFooter className="mt-8">
@@ -37,4 +39,4 @@ const EventDate = () => {
   );
 };
 
-export default EventDate;
+export default EventTime;

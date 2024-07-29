@@ -11,8 +11,6 @@ import {
   Map,
   MapCameraChangedEvent,
   Marker,
-  AdvancedMarker,
-  Pin,
 } from "@vis.gl/react-google-maps";
 
 const EventInputMap = () => {

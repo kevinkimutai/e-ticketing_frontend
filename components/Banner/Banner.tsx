@@ -7,7 +7,7 @@ import useEventModal from "@/hooks/useEventModal";
 import { EventModal } from "../Modal/EventModal";
 
 const Banner = () => {
-  const { isOpen, onClose, onOpen } = useEventModal();
+  // const { isOpen, onClose, onOpen } = useEventModal();
 
   return (
     <>

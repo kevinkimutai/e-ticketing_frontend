@@ -29,9 +29,9 @@ const page = () => {
       {/* CARDS INFO */}
       <section className="grid grid-cols-2 md:grid-cols-4 justify-start items-center my-4 gap-2 md:gap-4 mb-4">
         <div className="flex flex-col justify-center p-4 border bg-yellow-200 border-slate-200 rounded-2xl cursor-pointer ">
-          <p className="font-bold text-right text-xl mb-4">VVIP</p>
+          <p className="font-bold text-right text-lg mb-4">VVIP</p>
           <div className="flex justify-between items-end">
-            <Contact size={70} className="text-cyan-700" />
+            <Contact size={60} className="text-cyan-700" />
             <p>
               <span className="font-semibold text-lg text-cyan-700 mr-2">
                 400
@@ -42,9 +42,9 @@ const page = () => {
         </div>
 
         <div className="flex flex-col justify-center p-4 border bg-yellow-200 border-slate-200 rounded-2xl cursor-pointer ">
-          <p className="font-bold text-right text-xl mb-4">VVIP</p>
+          <p className="font-bold text-right text-lg mb-4">VVIP</p>
           <div className="flex justify-between items-end">
-            <Contact size={70} className="text-cyan-700" />
+            <Contact size={60} className="text-cyan-700" />
             <p>
               <span className="font-semibold text-lg text-cyan-700 mr-2">
                 400
@@ -55,9 +55,9 @@ const page = () => {
         </div>
 
         <div className="flex flex-col justify-center p-4 border bg-yellow-200 border-slate-200 rounded-2xl cursor-pointer ">
-          <p className="font-bold text-right text-xl mb-4">VVIP</p>
+          <p className="font-bold text-right text-lg mb-4">VVIP</p>
           <div className="flex justify-between items-end">
-            <Contact size={70} className="text-cyan-700" />
+            <Contact size={60} className="text-cyan-700" />
             <p>
               <span className="font-semibold text-lg text-cyan-700 mr-2">
                 400
@@ -68,9 +68,9 @@ const page = () => {
         </div>
 
         <div className="flex flex-col justify-center p-4 border bg-yellow-200 border-slate-200 rounded-2xl cursor-pointer ">
-          <p className="font-bold text-right text-xl mb-4">VVIP</p>
+          <p className="font-bold text-right text-lg mb-4">VVIP</p>
           <div className="flex justify-between items-end">
-            <Contact size={70} className="text-cyan-700" />
+            <Contact size={60} className="text-cyan-700" />
             <p>
               <span className="font-semibold text-lg text-cyan-700 mr-2">
                 400

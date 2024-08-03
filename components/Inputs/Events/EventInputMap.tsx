@@ -13,7 +13,12 @@ import {
   Marker,
 } from "@vis.gl/react-google-maps";
 
-const EventInputMap = () => {
+type ComponentProps = {
+  onBack: () => void;
+  onNext: (val: any) => Promise<void>;
+};
+
+const EventInputMap = ({ onBack, onNext }: ComponentProps) => {
   const [markerPosition, setMarkerPosition] = useState<any | null>(null);
 
   const handleMapClick = (event: any) => {
@@ -58,12 +63,24 @@ const EventInputMap = () => {
       {/* Footer */}
       <DialogFooter className="mt-8">
         <div className="flex justify-end items-center gap-4">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Cancel
-            </Button>
-          </DialogClose>
-          <Button>Next</Button>
+          <Button type="button" variant="secondary">
+            Back
+          </Button>
+
+          <Button
+            onClick={() => {
+              console.log(markerPosition);
+
+              if (markerPosition) {
+                onNext({
+                  latitude: markerPosition.lat,
+                  longitude: markerPosition.lng,
+                });
+              }
+            }}
+          >
+            Create
+          </Button>
         </div>
       </DialogFooter>
     </div>

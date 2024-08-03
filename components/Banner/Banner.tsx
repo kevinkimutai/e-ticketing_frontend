@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import React from "react";
-import { Button } from "../ui/button";
-import useEventModal from "@/hooks/useEventModal";
+
 import { EventModal } from "../Modal/EventModal";
 
-const Banner = () => {
+const Banner = ({ session }: any) => {
   // const { isOpen, onClose, onOpen } = useEventModal();
 
   return (
@@ -15,7 +14,8 @@ const Banner = () => {
         <div className="flex flex-col justify-center items-center bg-yellow-400 h-screen  md:h-[50vh] w-full rounded-lg relative overflow-hidden">
           <Image
             src={
-              "https://images.unsplash.com/photo-1622098152051-fcb9904099a7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              "https://images.unsplash.com/photo-1695048980897-6093a651e5cc?q=80&w=1858&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              // "https://images.unsplash.com/photo-1622098152051-fcb9904099a7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             }
             alt="banner"
             height={400}
@@ -30,9 +30,9 @@ const Banner = () => {
             Secure Your Ticket Today
           </p>
           <div className="flex z-10 gap-4">
-            <Button variant={"outline"}>Book Event</Button>
+            {/* <Button variant={"outline"}>Book Event</Button> */}
             {/* <Button onClick={onOpen}>Ticket Your Event</Button> */}
-            <EventModal />
+            <EventModal session={session} />
           </div>
         </div>
       </div>

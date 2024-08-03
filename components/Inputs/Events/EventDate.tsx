@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 import {
   Dialog,
@@ -17,10 +19,17 @@ import { Input } from "@/components/ui/input";
 import { Copy } from "lucide-react";
 import { DatePickerDemo } from "./DateComponent";
 
-const EventDate = () => {
+type ComponentProps = {
+  onBack: () => void;
+  onNext: (val: any) => Promise<void>;
+};
+
+const EventDate = ({ onBack, onNext }: ComponentProps) => {
+  const [date, setDate] = useState<Date>();
+
   return (
     <div>
-      <DatePickerDemo />
+      <DatePickerDemo date={date} setDate={setDate} />
 
       {/* Footer */}
       <DialogFooter className="mt-8">
@@ -30,7 +39,15 @@ const EventDate = () => {
               Cancel
             </Button>
           </DialogClose>
-          <Button>Next</Button>
+          <Button
+            onClick={() => {
+              if (date) {
+                onNext({ date: new Date(date.toISOString()) });
+              }
+            }}
+          >
+            Next
+          </Button>
         </div>
       </DialogFooter>
     </div>

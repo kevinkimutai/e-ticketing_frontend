@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 
 import {
   Select,
@@ -11,38 +13,118 @@ import {
 import { Label } from "@/components/ui/label";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import APP_URL from "@/constants";
+import { Categories } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-const EventCategory = () => {
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+const FormSchema = z.object({
+  category_id: z.string({
+    required_error: "Please select an event category.",
+  }),
+});
+
+type ComponentProps = {
+  onNext: (val: any) => Promise<void>;
+  onBack: () => void;
+  session: any;
+};
+
+const EventCategory = ({ onNext, onBack, session }: ComponentProps) => {
+  const [categories, setCategories] = useState<Categories>([]);
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
+
+  const fetchCategories = async () => {
+    try {
+      const res = await fetch(`${APP_URL}/api/v1/category`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session}`,
+        },
+      });
+      const { data } = await res.json();
+
+      setCategories(data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log("DATA", data);
+    //Convert To Number
+
+    const categoryId = Number(data.category_id);
+
+    onNext({ category_id: categoryId });
+  }
+
   return (
-    <div>
-      <div className="flex items-center px-4 py-2">
-        <div className="grid flex-1 gap-2">
-          <Label htmlFor="name">Category</Label>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Theme" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-              <SelectItem value="system">System</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+        <FormField
+          control={form.control}
+          name="category_id"
+          render={({ field }: any) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={"field.value.toString()"}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select event category" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {categories?.map((cat) => (
+                    <>
+                      <SelectItem value={cat?.category_id.toString()}>
+                        {cat?.name}
+                      </SelectItem>
+                    </>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormDescription>Event categories</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      {/* Footer */}
-      <DialogFooter className="mt-8">
-        <div className="flex justify-end items-center gap-4">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Cancel
+        {/* Footer */}
+        <DialogFooter className="mt-8">
+          <div className="flex justify-end items-center gap-4">
+            {/* <DialogClose asChild> */}
+            <Button type="button" variant="secondary" onClick={onBack}>
+              Back
             </Button>
-          </DialogClose>
-          <Button>Next</Button>
-        </div>
-      </DialogFooter>
-    </div>
+            {/* </DialogClose> */}
+            <Button type="submit">Next</Button>
+          </div>
+        </DialogFooter>
+      </form>
+    </Form>
   );
 };
 

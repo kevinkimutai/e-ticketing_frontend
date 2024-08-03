@@ -1,5 +1,7 @@
+"use client";
+
 import ImageUpload from "@/components/Upload/ImageUpload";
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Dialog,
@@ -13,20 +15,39 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-const EventPoster = () => {
+type ComponentProps = {
+  onNext: (val: any) => Promise<void>;
+  onBack: () => void;
+};
+
+const EventPoster = ({ onBack, onNext }: ComponentProps) => {
+  const [imageURL, setImageURL] = useState<string | undefined>();
+  const onImageURL = (url: string) => {
+    setImageURL(url);
+  };
+
   return (
     <div>
-      <ImageUpload />
+      <ImageUpload onImageURL={onImageURL} />
 
       {/* Footer */}
       <DialogFooter className="mt-8">
         <div className="flex justify-end items-center gap-4">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Cancel
-            </Button>
-          </DialogClose>
-          <Button>Next</Button>
+          <Button type="button" variant="secondary" onClick={onBack}>
+            Back
+          </Button>
+
+          <Button
+            onClick={() => {
+              if (imageURL) {
+                onNext({ poster_url: imageURL });
+              } else {
+                return;
+              }
+            }}
+          >
+            Next
+          </Button>
         </div>
       </DialogFooter>
     </div>

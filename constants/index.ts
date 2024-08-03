@@ -154,3 +154,11 @@ export const categoryIcons: any = [
     label: "picnic",
   },
 ];
+
+let APP_URL: string = "http://localhost:3000";
+
+if (process.env.NEXT_PUBLIC_APP_ENVIRONMENT == "development") {
+  APP_URL = "http://localhost:8000";
+}
+
+export default APP_URL;

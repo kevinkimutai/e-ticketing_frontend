@@ -9,7 +9,11 @@ import Image from "next/image";
 import { ClipLoader } from "react-spinners";
 import { UploadCloud } from "lucide-react";
 
-const ImageUpload = () => {
+type ComponentProps = {
+  onImageURL: (url: string) => void;
+};
+
+const ImageUpload = ({ onImageURL }: ComponentProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [uploadURL, setUploadURL] = useState<string | undefined>();
 
@@ -79,14 +83,13 @@ const ImageUpload = () => {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: any) => {
           setUploadURL(downloadURL);
-          //   setFormState((prev) => ({
-          //     ...prev,
-          //     images: [...prev.images, downloadURL],
-          //   }));
+
           console.log(downloadURL);
 
           setLoading(false);
           console.log("File available at", downloadURL);
+
+          onImageURL(downloadURL);
         });
       }
     );

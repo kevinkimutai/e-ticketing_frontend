@@ -5,15 +5,24 @@ import Events from "@/components/Events/Events";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
 import { Search } from "@/components/Search/Search";
-import Image from "next/image";
+import { checkUser } from "@/utils/authmiddleware/check-user";
+import { getSessionUser } from "@/utils/authmiddleware/getSession";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
+  const user = await checkUser();
+  const session = await getSessionUser();
+
+  if (!user) {
+    redirect("/api/auth/login");
+  }
+
   return (
     <main className="flex min-h-screen flex-col py-2">
       {/* Header */}
       <Header />
       {/* Banner */}
-      <Banner />
+      <Banner session={session} />
       {/* Search */}
       <div className="flex justify-center items-center px-12 ">
         <Search />

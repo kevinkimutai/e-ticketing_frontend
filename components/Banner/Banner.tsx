@@ -23,7 +23,7 @@ const Banner = ({ session }: any) => {
             className="absolute w-full h-full object-cover"
           />
           <div className="absolute w-full h-full bg-gradient-to-b from-yellow-400 to-transparent"></div>
-          <h1 className="text-4xl font-bold text-white shadow-xl mb-2 z-10">
+          <h1 className="text-4xl font-bold text-white mb-2 z-10">
             Join The Fun
           </h1>
           <p className="font-semibold text-white mb-8 z-10">

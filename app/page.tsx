@@ -4,14 +4,21 @@ import EventLocation from "@/components/EventLocation/EventLocation";
 import Events from "@/components/Events/Events";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
+import MainSection from "@/components/MainSection/MainSection";
 import { Search } from "@/components/Search/Search";
+import APP_URL from "@/constants";
 import { checkUser } from "@/utils/authmiddleware/check-user";
 import { getSessionUser } from "@/utils/authmiddleware/getSession";
+import { fetchEvents } from "@/utils/fetch/fetchEvents";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
   const user = await checkUser();
   const session = await getSessionUser();
+
+  const events = await fetchEvents(session!);
+
+  console.log(events);
 
   if (!user) {
     redirect("/api/auth/login");
@@ -23,15 +30,7 @@ export default async function Home() {
       <Header />
       {/* Banner */}
       <Banner session={session} />
-      {/* Search */}
-      <div className="flex justify-center items-center px-12 ">
-        <Search />
-      </div>
-      {/* Event Location */}
-      <EventLocation />
-
-      {/* Categories */}
-      <Categories />
+      <MainSection session={session} />
 
       {/* Footer */}
       <Footer />

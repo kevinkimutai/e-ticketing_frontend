@@ -1,4 +1,31 @@
-import { Drum, KeyboardMusic, MicVocal, Diameter } from "lucide-react";
+import {
+  Drum,
+  KeyboardMusic,
+  MicVocal,
+  Diameter,
+  LoaderPinwheel,
+  Dumbbell,
+  HandCoins,
+  Presentation,
+  Speech,
+  ChartPie,
+  Users,
+  School,
+  Milk,
+  Network,
+  Receipt,
+  Palette,
+  Drama,
+  Clapperboard,
+  HeartHandshake,
+  Bird,
+  Cake,
+  Torus,
+  PersonStanding,
+  BicepsFlexed,
+  Activity,
+  Code2Icon,
+} from "lucide-react";
 
 export const categoryIcons: any = [
   {
@@ -18,99 +45,96 @@ export const categoryIcons: any = [
     label: "football match",
   },
   {
-    icon: MicVocal,
+    icon: LoaderPinwheel,
     label: "basketball game",
   },
   {
-    icon: MicVocal,
+    icon: Dumbbell,
     label: "marathon",
   },
   {
-    icon: MicVocal,
+    icon: HandCoins,
     label: "tennis tournament",
   },
   {
-    icon: MicVocal,
+    icon: Presentation,
     label: "workshop",
   },
   {
-    icon: MicVocal,
+    icon: Speech,
     label: "seminar",
   },
   {
-    icon: MicVocal,
+    icon: ChartPie,
     label: "conference",
   },
   {
-    icon: MicVocal,
+    icon: Users,
     label: "meeting",
   },
   {
-    icon: MicVocal,
+    icon: School,
     label: "lecture",
   },
   {
-    icon: MicVocal,
+    icon: Milk,
     label: "product launch",
   },
+
   {
-    icon: MicVocal,
-    label: "meeting",
-  },
-  {
-    icon: MicVocal,
+    icon: Network,
     label: "networking event",
   },
   {
-    icon: MicVocal,
+    icon: Receipt,
     label: "trade-show",
   },
   {
-    icon: MicVocal,
+    icon: Palette,
     label: "art exhibition",
   },
   {
-    icon: MicVocal,
+    icon: Drama,
     label: "theater perfomance",
   },
   {
-    icon: MicVocal,
+    icon: Clapperboard,
     label: "film screening",
   },
   {
-    icon: MicVocal,
+    icon: HeartHandshake,
     label: "charity fundraiser",
   },
   {
-    icon: MicVocal,
+    icon: Bird,
     label: "volunteer event",
   },
   {
-    icon: MicVocal,
+    icon: Cake,
     label: "birthday party",
   },
   {
-    icon: MicVocal,
+    icon: Torus,
     label: "wedding",
   },
   {
-    icon: MicVocal,
+    icon: PersonStanding,
     label: "reunion",
   },
   {
-    icon: MicVocal,
+    icon: BicepsFlexed,
     label: "yoga class",
   },
   {
-    icon: MicVocal,
+    icon: Activity,
     label: "health fair",
   },
   {
-    icon: MicVocal,
+    icon: Dumbbell,
     label: "fitness bootcamp",
   },
   {
-    icon: MicVocal,
+    icon: Code2Icon,
     label: "hackathon",
   },
   {

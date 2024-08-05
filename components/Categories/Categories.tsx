@@ -48,7 +48,9 @@ const Categories = () => {
     <div className="py-6 px-2 sm:px-4 md:px-6 lg:px-12">
       <h2 className="flex items-center font-bold text-2xl ">
         Explore By{" "}
-        <span className="ml-4 bg-yellow-200 px-4 py-2 text-xl">Categories</span>
+        <span className="ml-4 bg-yellow-200 px-4 py-2 text-lg rounded-md">
+          Categories
+        </span>
       </h2>
 
       <div className="py-4 overflow-x-scroll no-scrollbar flex justify-start gap-2 md:gap-4 lg:gap-6 ">
@@ -56,7 +58,7 @@ const Categories = () => {
         {categoryIcons.map(({ icon: Icon, label }) => (
           <div
             key={label}
-            className={`flex flex-col justify-center border border-yellow-400 p-4 items-center cursor-pointer transition-all ${
+            className={`flex flex-col justify-center border border-yellow-400 rounded-lg p-4 items-center cursor-pointer transition-all ${
               label === selectedCategory ? "bg-yellow-200 scale-105" : ""
             }`}
             onClick={() => {

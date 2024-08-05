@@ -1,4 +1,5 @@
 export type Event = {
+  event_id: Number;
   name: string;
   category_id: Number;
   date: Date;
@@ -13,5 +14,10 @@ export type Event = {
 
 export type Categories = {
   category_id: Number;
+  name: string;
+}[];
+
+export type Locations = {
+  location_id: Number;
   name: string;
 }[];

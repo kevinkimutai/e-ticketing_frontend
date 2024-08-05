@@ -39,7 +39,7 @@ export function EventModal({ session }: any) {
   const router = useRouter();
 
   const createEvent = async (event: Event | null) => {
-    console.log("JSON", JSON.stringify(event));
+   
     try {
       const res = await fetch(`${APP_URL}/api/v1/event`, {
         method: "POST",
@@ -62,18 +62,20 @@ export function EventModal({ session }: any) {
   };
 
   const onNext = async (val: any) => {
-    setEvent((prevState) => {
-      const newState = { ...prevState, ...val };
-      console.log("Updated state:", newState);
-      return newState;
-    });
-
     if (step == 7) {
       // Submit To BE
-      const data = await createEvent(event);
+      const e = { ...event, val };
+
+      // @ts-ignore
+      const data = await createEvent(e);
 
       router.push(`/dashboard/organiser/event/${data.event_id}`);
     } else {
+      setEvent((prevState) => {
+        const newState = { ...prevState, ...val };
+        console.log("Updated state:", newState);
+        return newState;
+      });
       setStep((prevState) => prevState + 1);
     }
   };

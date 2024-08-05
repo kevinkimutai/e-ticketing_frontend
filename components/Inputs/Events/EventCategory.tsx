@@ -28,6 +28,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   category_id: z.string({
@@ -43,6 +44,7 @@ type ComponentProps = {
 
 const EventCategory = ({ onNext, onBack, session }: ComponentProps) => {
   const [categories, setCategories] = useState<Categories>([]);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -57,9 +59,17 @@ const EventCategory = ({ onNext, onBack, session }: ComponentProps) => {
           Authorization: `Bearer ${session}`,
         },
       });
-      const { data } = await res.json();
 
-      setCategories(data);
+      if (res.ok) {
+        const { data } = await res.json();
+        setCategories(data);
+      } else {
+        const data = await res.json();
+
+        if (data.message == "Failedd To Verify Token") {
+          router.push("/api/auth/logout");
+        }
+      }
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -70,7 +80,6 @@ const EventCategory = ({ onNext, onBack, session }: ComponentProps) => {
   }, []);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("DATA", data);
     //Convert To Number
 
     const categoryId = Number(data.category_id);

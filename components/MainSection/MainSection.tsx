@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import { Search } from "../Search/Search";
 import EventLocation from "../EventLocation/EventLocation";
-import Categories from "../Categories/Categories";
+
+import CategoriesSection from "../Categories/Categories";
 
 type ComponentProps = {
   session: string | undefined;
@@ -20,7 +21,7 @@ const MainSection = ({ session }: ComponentProps) => {
       {/* Event Location */}
       <EventLocation session={session} />
       {/* Categories */}
-      <Categories />
+      <CategoriesSection session={session} />
     </>
   );
 };

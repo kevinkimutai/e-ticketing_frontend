@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-
-import qs from "query-string";
-import { categoryIcons } from "@/constants";
+import { Event, Locations } from "@/types";
+import APP_URL, { categoryIcons } from "@/constants";
 import Events from "../Events/Events";
 
 const IconComponent = ({ Icon, selected }: any) => (
@@ -15,34 +14,51 @@ const IconComponent = ({ Icon, selected }: any) => (
   />
 );
 
-const Categories = () => {
-  const searchParams = useSearchParams();
+type ComponentProps = {
+  session: string | undefined;
+};
+
+const Categories = ({ session }: ComponentProps) => {
+  const [selectedLabel, setSelectedLabel] = useState<Number | undefined>(1);
+  const [events, setEvents] = useState<Event[] | undefined>();
+  const [page, setPage] = useState<Number>(1);
   const router = useRouter();
 
-  const selectedCategory = searchParams?.get("category");
-
-  let currentQuery = {};
-
-  if (searchParams) {
-    currentQuery = qs.parse(searchParams.toString());
-  }
-
-  const queryHandler = (label: string) => {
-    const updatedQuery = {
-      ...currentQuery,
-      category: label,
-    };
-
-    const url = qs.stringifyUrl(
-      {
-        url: "/",
-        query: updatedQuery,
-      },
-      { skipNull: true }
-    );
-
-    router.push(url);
+  const labelHandler = (label: number) => {
+    setSelectedLabel(label);
   };
+
+  const fetchEvents = async () => {
+    try {
+      const res = await fetch(
+        `${APP_URL}/api/v1/event?category_id=${selectedLabel}&limit=8&page=${page}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session}`,
+          },
+        }
+      );
+
+      if (res.ok) {
+        const { data } = await res.json();
+        setEvents(data);
+      } else {
+        const data = await res.json();
+
+        if (data.message == "Failedd To Verify Token") {
+          router.push("/api/auth/logout");
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, [selectedLabel, page]);
 
   return (
     <div className="py-6 px-2 sm:px-4 md:px-6 lg:px-12">
@@ -55,17 +71,17 @@ const Categories = () => {
 
       <div className="py-4 overflow-x-scroll no-scrollbar flex justify-start gap-2 md:gap-4 lg:gap-6 ">
         {/*@ts-ignore */}
-        {categoryIcons.map(({ icon: Icon, label }) => (
+        {categoryIcons.map(({ id, icon: Icon, label }) => (
           <div
-            key={label}
+            key={id}
             className={`flex flex-col justify-center border border-yellow-400 rounded-lg p-4 items-center cursor-pointer transition-all ${
-              label === selectedCategory ? "bg-yellow-200 scale-105" : ""
+              id === selectedLabel ? "bg-yellow-200 scale-105" : ""
             }`}
             onClick={() => {
-              queryHandler(label);
+              labelHandler(id);
             }}
           >
-            <IconComponent Icon={Icon} selected={label === selectedCategory} />
+            <IconComponent Icon={Icon} selected={id === selectedLabel} />
             <p className="text-slate-800 text-sm whitespace-nowrap pb-2 capitalize transition-all">
               {label}
             </p>
@@ -75,10 +91,7 @@ const Categories = () => {
 
       {/* Events */}
       <div className="flex justify-center items-center py-6">
-        <Events />
-      </div>
-      <div className="flex justify-center items-center py-6">
-        <Events />
+        <Events events={events} />
       </div>
 
       {/* Pagination */}

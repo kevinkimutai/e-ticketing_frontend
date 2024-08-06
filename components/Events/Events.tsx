@@ -8,7 +8,7 @@ import { date } from "zod";
 import { formatDate } from "@/utils/formatDate/formatDate";
 
 type ComponentProps = {
-  events: Event[];
+  events: Event[] | undefined;
 };
 
 const Events = ({ events }: ComponentProps) => {

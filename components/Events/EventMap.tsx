@@ -9,7 +9,12 @@ import {
   Marker,
 } from "@vis.gl/react-google-maps";
 
-const EventMap = () => {
+type ComponentProps = {
+  latitude: number;
+  longitude: number;
+};
+
+const EventMap = ({ latitude, longitude }: ComponentProps) => {
   return (
     <div className="rounded-2xl overflow-hidden h-[300px] mb-4">
       <APIProvider
@@ -21,7 +26,7 @@ const EventMap = () => {
         <Map
           defaultZoom={13}
           mapId={"ea839b518fdbe830"}
-          defaultCenter={{ lat: -1.293971, lng: 36.851253 }}
+          defaultCenter={{ lat: latitude, lng: longitude }}
           // onClick={handleMapClick}
           onCameraChanged={(ev: MapCameraChangedEvent) =>
             console.log(
@@ -33,7 +38,7 @@ const EventMap = () => {
           }
         >
           <Marker
-            position={{ lat: -1.293971, lng: 36.851253 }} // Set marker position
+            position={{ lat: latitude, lng: longitude }} // Set marker position
             // Add any additional AdvancedMarker properties here
           />
         </Map>

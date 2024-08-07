@@ -6,6 +6,7 @@ import React, { Component } from "react";
 import { Event, Locations } from "@/types";
 import { date } from "zod";
 import { formatDate } from "@/utils/formatDate/formatDate";
+import Link from "next/link";
 
 type ComponentProps = {
   events: Event[] | undefined;
@@ -25,26 +26,28 @@ const Events = ({ events }: ComponentProps) => {
         //   className="w-full h-[20rem] object-fill"
         // />
         events?.map((event: Event) => (
-          <div
-            key={event.event_id.toString()}
-            className="flex flex-col border border-stone-500 shadow cursor-pointer"
-          >
-            <Image
-              alt={event.name}
-              src={event.poster_url}
-              height={400}
-              width={400}
-              className="w-full h-[20rem] object-fill"
-            />
-            <div className="p-4">
-              <h2 className="font-semibold">{event.name}</h2>
-              <p>{formatDate(date.toString())}</p>
-              <p className="flex mt-4 items-center text-slate-500">
-                <MapPin size={20} />
-                {event.location}
-              </p>
+          <Link href={`/event/${event.event_id}`}>
+            <div
+              key={event.event_id.toString()}
+              className="flex flex-col border border-stone-500 shadow cursor-pointer"
+            >
+              <Image
+                alt={event.name}
+                src={event.poster_url}
+                height={400}
+                width={400}
+                className="w-full h-[20rem] object-fill"
+              />
+              <div className="p-4">
+                <h2 className="font-semibold">{event.name}</h2>
+                <p>{formatDate(date.toString())}</p>
+                <p className="flex mt-4 items-center text-slate-500">
+                  <MapPin size={20} />
+                  {event.location}
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
         ))
       )}
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -9,6 +9,7 @@ import { Blocks, Pin, School } from "lucide-react";
 import Image from "next/image";
 
 import { Input } from "@/components/ui/input";
+import { Event, Location, TicketOrderItems } from "@/types";
 
 const cart = [
   {
@@ -16,7 +17,7 @@ const cart = [
     image: "/placeholder.svg",
     title: "VVIP",
     price: 4000,
-    quantity: 1,
+    quantity: 10,
   },
   {
     id: 2,
@@ -30,46 +31,57 @@ const cart = [
     image: "/placeholder.svg",
     title: "Regular",
     price: 1000,
-    quantity: 1,
-  },
-  {
-    id: 3,
-    image: "/placeholder.svg",
-    title: "Regular",
-    price: 1000,
-    quantity: 1,
-  },
-  {
-    id: 3,
-    image: "/placeholder.svg",
-    title: "Regular",
-    price: 1000,
-    quantity: 1,
-  },
-  {
-    id: 3,
-    image: "/placeholder.svg",
-    title: "Regular",
-    price: 1000,
-    quantity: 1,
-  },
-  {
-    id: 3,
-    image: "/placeholder.svg",
-    title: "Regular",
-    price: 1000,
-    quantity: 1,
+    quantity: 10,
   },
 ];
 
-const EventDetails = () => {
+type ComponentProps = {
+  event: Event;
+  location: Location;
+};
+
+const EventDetails = ({ event, location }: ComponentProps) => {
+  const [eventCart, setEventCart] = useState<TicketOrderItems[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number | undefined>();
+
+  const cartHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    ticketTypeId: number,
+    itemPrice: number
+  ) => {
+    const qty = +e.target.value;
+
+    setEventCart((prevState) => {
+      const existingItemIndex = prevState?.findIndex(
+        (item) => item.ticket_type_id === ticketTypeId
+      );
+      if (existingItemIndex! > -1) {
+        const updatedCart = [...prevState];
+        updatedCart[existingItemIndex].quantity = qty;
+        return updatedCart;
+      } else {
+        return [
+          ...prevState,
+          { ticket_type_id: ticketTypeId, quantity: qty, price: itemPrice },
+        ];
+      }
+    });
+  };
+
+  useEffect(() => {
+    const newTotalPrice = eventCart.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+
+    setTotalPrice(newTotalPrice);
+  }, [eventCart]);
+
   return (
     <div className="flex flex-col md:flex-row items-center justify-start md:items-start">
       <div className="w-[300px] rounded-md">
         <Image
-          src={
-            "https://firebasestorage.googleapis.com/v0/b/ticket-pass-9cce1.appspot.com/o/rent-images%2Feventposters2.jpg?alt=media&token=f5fc577c-b858-4999-8a2b-48de9ca8a01c"
-          }
+          src={event.poster_url}
           alt={"poster"}
           width={400}
           height={400}
@@ -80,19 +92,19 @@ const EventDetails = () => {
       <div className="w-full flex flex-col lg:flex-row">
         <div className=" w-full lg:w-3/5 py-4  px-6">
           <div className="flex justify-end">
-            <h1 className="text-2xl font-bold">Telluride</h1>
+            <h1 className="text-2xl font-bold">{event.name}</h1>
           </div>
-          <p className="text-slate-500 mb-4">14th-date-2024</p>
+          <p className="text-slate-500 mb-4">{event.date.toString()}</p>
           <ul className="mb-6">
             <li className="flex items-center p-2">
               <Pin size={20} className="mr-2 text-red-400" />
               <span className="font-semibold mr-6">Venue</span>
-              alejandro rd
+              {event.location}
             </li>
             <li className="flex items-center p-2">
               <School size={20} className="mr-2 text-blue-400" />
               <span className="font-semibold mr-6">Town</span>
-              Nairobi
+              {location.name}
             </li>
             <li className="flex items-center p-2">
               <Blocks size={20} className="mr-2 text-yellow-400" />
@@ -100,22 +112,7 @@ const EventDetails = () => {
               Concert
             </li>
           </ul>
-          <p className="text-gray-600">
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.Vestibulum
-            ante ipsum primis in faucibus orci luctus et ultrices posuere
-            cubilia curae; Etiam at risus et justo dignissim congue. Donec
-            congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc
-            euismod nec tortor nec blandit. Quisque pretium malesuada lacus,
-            eget lacinia eros vehicula non. Suspendisse potenti. In hac
-            habitasse platea dictumst. Nulla facilisi. Sed porttitor libero ac
-            turpis molestie, et egestas nisi porta. Sed nec fe"
-          </p>
+          <p className="text-gray-600">{event.description}</p>
         </div>
         <div className="w-full lg:w-[450px] px-6 py-4">
           <div className="bg-yellow-200 rounded-2xl w-full h-fit shadow p-2 md:p-4">
@@ -145,7 +142,11 @@ const EventDetails = () => {
                       </p>
                     </div>
                     <div className="flex items-center gap-2 p-1">
-                      <Input type="number" className="w-16" />
+                      <Input
+                        type="number"
+                        className="w-16"
+                        onChange={(e) => cartHandler(e, item.id, item.price)}
+                      />
                     </div>
                   </div>
                 ))}
@@ -154,7 +155,7 @@ const EventDetails = () => {
             <div className="border-t">
               <div className="flex items-center justify-between mt-6">
                 <p className="text-lg font-semibold">Total:</p>
-                <p className="text-lg font-semibold">4000.00</p>
+                <p className="text-lg font-semibold">{totalPrice}.00</p>
               </div>
               <div className="flex gap-4 mt-4">
                 <Button variant="outline" className="flex-1">

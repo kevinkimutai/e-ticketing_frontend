@@ -10,6 +10,7 @@ export type Event = {
   longitude: Number;
   latitude: Number;
   poster_url: string;
+  location_id: number;
 };
 
 export type Categories = {
@@ -21,3 +22,14 @@ export type Locations = {
   location_id: Number;
   name: string;
 }[];
+
+export type TicketOrderItems = {
+  ticket_type_id: number;
+  quantity: number;
+  price: number;
+};
+
+export type Location = {
+  location_id: number;
+  name: string;
+};

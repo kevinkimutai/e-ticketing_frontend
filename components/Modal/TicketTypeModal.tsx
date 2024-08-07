@@ -3,16 +3,16 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
-import { useState } from "react";
 import Modal from "./Modal";
 
 import TicketTypeInput from "../Inputs/TicketType/TicketTypeInput";
 
-type Ttype = {};
+type ComponentProps = {
+  session: string | undefined;
+  eventId: number;
+};
 
-export function TicketTypeModal() {
-  const [ttype, setTtype] = useState<Ttype | null>(null);
-
+export function TicketTypeModal({ session, eventId }: ComponentProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -23,7 +23,7 @@ export function TicketTypeModal() {
         title="Add Your Ticket-Types"
         description="We offer the following ticket types (Regular,VIP,VVIP)"
       >
-        <TicketTypeInput />
+        <TicketTypeInput session={session} eventId={eventId} />
       </Modal>
     </Dialog>
   );

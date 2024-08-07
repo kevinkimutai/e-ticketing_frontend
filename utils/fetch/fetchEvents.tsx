@@ -82,3 +82,31 @@ export const fetchEvent = async (
     console.error("Error fetching event:", error);
   }
 };
+
+export const fetchTicketTypes = async (
+  session: string | undefined,
+  eventId: number
+) => {
+  try {
+    const res = await fetch(`${APP_URL}/api/v1/event/${eventId}/ticket-types`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session}`,
+      },
+    });
+
+    if (res.ok) {
+      const { data } = await res.json();
+      return data;
+    } else {
+      const data = await res.json();
+
+      if (data.message == "Failedd To Verify Token") {
+        redirect("/api/auth/logout");
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching tickettypes:", error);
+  }
+};

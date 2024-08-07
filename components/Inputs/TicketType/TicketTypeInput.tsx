@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Select,
@@ -12,35 +12,97 @@ import { Label } from "@/components/ui/label";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import APP_URL from "@/constants";
+import { useRouter } from "next/navigation";
 
-const TicketTypeInput = () => {
+type ComponentProps = {
+  session: string | undefined;
+  eventId: Number;
+};
+
+const TicketTypeInput = ({ session, eventId }: ComponentProps) => {
+  const [tprice, setTprice] = useState<any>();
+  const [ttickets, setTtickets] = useState<any>();
+  const [tname, setTname] = useState<any>();
+
+  const router = useRouter();
+
+  const submitHandler = async () => {
+    if (!tname || !tprice || !ttickets) {
+      return;
+    }
+
+    let formData = {
+      name: tname,
+      price: tprice,
+      total_tickets: ttickets,
+    };
+
+    console.log(JSON.stringify(formData));
+
+    try {
+      const res = await fetch(
+        `${APP_URL}/api/v1/event/${eventId}/ticket-types`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (res.ok) {
+        router.push(`dashboard/organiser/event/${eventId}`);
+      } else {
+        console.log(await res.json());
+        throw new Error("failed ");
+      }
+
+      const { data } = await res.json();
+
+      return data;
+    } catch (error) {
+      console.error("Error creating event:", error);
+    }
+  };
+
   return (
     <div>
-      <div className="flex items-center px-4 py-2">
-        <div className="grid flex-1 gap-2">
+      <div className="grid grid-cols-2 gap-2 px-4 py-2">
+        <div className="grid flex-1 gap-2 mb-4">
           <Label htmlFor="name">Ticket Type</Label>
-          <Select>
+          <Select onValueChange={(val: string) => setTname(val)}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Theme" />
+              <SelectValue placeholder="ticket-type name" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light">Early Bird</SelectItem>
-              <SelectItem value="dark">Regular</SelectItem>
-              <SelectItem value="system">VIP</SelectItem>
-              <SelectItem value="system">VVIP</SelectItem>
-              <SelectItem value="system">System</SelectItem>
+              <SelectItem value="VVIP">VVIP</SelectItem>
+              <SelectItem value="VIP">VIP</SelectItem>
+              <SelectItem value="Regular">Regular</SelectItem>
+              <SelectItem value="Early Bird">Early Bird</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        <div className="grid flex-1 gap-2">
+        <div className="grid flex-1 gap-2 mb-4">
           <Label htmlFor="price">Price</Label>
-          <Input id="price" />
+          <Input
+            id="price"
+            type="number"
+            onChange={(e) => setTprice(e.target.value)}
+          />
         </div>
-      </div>
 
-      <div className="flex justify-center items-center mt-4">
-        <Button>Add Another Type</Button>
+        <div className="grid flex-1 gap-2">
+          <Label htmlFor="totaltickets">Total Tickets</Label>
+          <Input
+            id="totaltickets"
+            type="number"
+            onChange={(e) => setTtickets(e.target.value)}
+          />
+        </div>
       </div>
 
       {/* Footer */}
@@ -51,7 +113,7 @@ const TicketTypeInput = () => {
               Cancel
             </Button>
           </DialogClose>
-          <Button>Next</Button>
+          <Button onClick={submitHandler}>Create</Button>
         </div>
       </DialogFooter>
     </div>

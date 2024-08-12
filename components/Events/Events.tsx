@@ -26,10 +26,10 @@ const Events = ({ events }: ComponentProps) => {
         //   className="w-full h-[20rem] object-fill"
         // />
         events?.map((event: Event) => (
-          <Link href={`/event/${event.event_id}`}>
+          <Link href={`/event/${event.event_id}`} className="">
             <div
               key={event.event_id.toString()}
-              className="flex flex-col border border-stone-500 shadow cursor-pointer"
+              className="flex flex-col border border-gray-500 shadow cursor-pointer max-w-[300px] mx-auto"
             >
               <Image
                 alt={event.name}
@@ -40,7 +40,7 @@ const Events = ({ events }: ComponentProps) => {
               />
               <div className="p-4">
                 <h2 className="font-semibold">{event.name}</h2>
-                <p>{formatDate(date.toString())}</p>
+                <p>{formatDate(event.date.toString())}</p>
                 <p className="flex mt-4 items-center text-slate-500">
                   <MapPin size={20} />
                   {event.location}

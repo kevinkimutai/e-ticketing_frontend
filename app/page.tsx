@@ -16,9 +16,7 @@ export default async function Home() {
   const user = await checkUser();
   const session = await getSessionUser();
 
-  const events = await fetchEvents(session!);
-
-  console.log(events);
+  // const events = await fetchEvents(session!);
 
   if (!user) {
     redirect("/api/auth/login");

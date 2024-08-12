@@ -1,4 +1,4 @@
-import { Contact } from "lucide-react";
+import { Contact, PersonStanding } from "lucide-react";
 import React from "react";
 
 type ComponentProps = {
@@ -15,14 +15,12 @@ const TicketTypeCard = ({ ttypes }: ComponentProps) => {
         >
           <p className="font-bold text-right text-lg mb-4">{ttype.name}</p>
           <div className="flex justify-between items-end">
-            <Contact size={60} className="text-cyan-700" />
+            <PersonStanding size={60} className="text-cyan-700" />
             <p>
               <span className="font-semibold text-lg text-cyan-700 mr-2">
-                {ttype.total_tickets - ttype.remaining_tickets == 0
-                  ? ttype.total_tickets
-                  : ttype.total_tickets - ttype.remaining_tickets}
+                {ttype.total_tickets - ttype.remaining_tickets}
               </span>
-              <span className="font-bold text-xl">/500</span>
+              <span className="font-bold text-xl">/{ttype.total_tickets}</span>
             </p>
           </div>
         </div>

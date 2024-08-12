@@ -56,7 +56,7 @@ const Header = async () => {
   const user = session?.user;
 
   return (
-    <div className="flex justify-end  sm:justify-between items-center w-full px-2 sm:px-4 md:px-6 lg:px-12  py-2">
+    <div className="flex justify-between items-center w-full px-2 sm:px-4 md:px-6 lg:px-12  py-2">
       {/* Logo */}
       <Link href={"/"}>
         <Image
@@ -64,7 +64,7 @@ const Header = async () => {
           width={150}
           height={50}
           alt={"logo"}
-          className="hidden sm:block"
+          // className="w-[120px]"
         />
       </Link>
 
@@ -91,7 +91,7 @@ const Header = async () => {
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <NavigationMenuItem>
+          <NavigationMenuItem className="hidden md:block">
             <Link href="/docs" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Logout

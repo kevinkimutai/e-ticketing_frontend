@@ -1,22 +1,47 @@
 import { EventsTable } from "@/components/Dashboard/Tables/EventsTable";
+import Header from "@/components/Header/Header";
 import OrganiserSidebar from "@/components/Sidebar/OrganiserSidebar";
 import Sidebar from "@/components/Sidebar/OrganiserSidebar";
+import { getSessionUser } from "@/utils/authmiddleware/getSession";
+import { fetchOrganisersUser } from "@/utils/fetch/fetchEvents";
 import {
   ChartNoAxesCombined,
   Contact,
   Headset,
   PartyPopper,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
-const page = () => {
+const page = async () => {
+  const session = await getSessionUser();
+  //Fetch Organiser/user
+  const organiser = await fetchOrganisersUser(session);
+  //Fetch events/users
+  //Fetch Total attendees
+  //Fetch Total Sales
+
+  console.log(organiser);
   return (
-    <main className="flex w-full">
+    <main className="flex w-full relative">
+      {/* SIDEBAR */}
       <aside
-        className="2
-      w-1/5 h-screen absolute bg-yellow-200 hidden md:block"
+        className="
+      w-[15%] h-screen fixed bottom-0 left-0 top-0 bg-yellow-200 hidden md:block"
       >
-        <ul className="mt-[60%]">
+        <div className="py-2 mb-6 flex justify-center items-center">
+          <Link href={"/"}>
+            <Image
+              src={"/logo.png"}
+              width={150}
+              height={50}
+              alt={"logo"}
+              // className="w-[120px]"
+            />
+          </Link>
+        </div>
+        <ul className="">
           <li className="py-2 flex items-center  pl-6 cursor-pointer text-cyan-700 bg-white w-full">
             <PartyPopper className="mr-2" /> Events
           </li>
@@ -29,7 +54,9 @@ const page = () => {
           </li>
         </ul>
       </aside>
-      <section className="md:ml-[20%] min-h-screen w-full md:w-4/5 px-2 md:px-8 py-4">
+
+      {/*  */}
+      <section className="md:ml-[15%] min-h-screen w-full md:w-[85%] px-2 md:px-8 py-4">
         <div className="flex items-center justify-between">
           <h1 className="text-xl">
             <span className="font-bold text-cyan-700 mr-2">Hi!</span>
@@ -45,13 +72,15 @@ const page = () => {
             </p>
             <div className="flex justify-between items-end">
               <PartyPopper size={60} className="text-yellow-200" />
-              <p className="text-white text-xl font-semibold">2</p>
+              <p className="text-white text-xl font-semibold">
+                {organiser?.total}
+              </p>
             </div>
           </div>
         </div>
 
-        <h2 className="text-lg font-semibold my-8">Events</h2>
-        <EventsTable />
+        {/* <h2 className="text-lg font-semibold my-8">Events</h2> */}
+        <EventsTable organiser={organiser?.data} />
       </section>
     </main>
   );

@@ -117,6 +117,7 @@ const EventLocation = ({ session }: ComponentProps) => {
         <Button
           variant={"outline"}
           onClick={() => setPage((prevState) => +prevState + 1)}
+          className="hidden md:block"
         >
           View More
         </Button>

@@ -34,8 +34,8 @@ const TicketTypeInput = ({ session, eventId }: ComponentProps) => {
 
     let formData = {
       name: tname,
-      price: tprice,
-      total_tickets: ttickets,
+      price: +tprice,
+      total_tickets: +ttickets,
     };
 
     console.log(JSON.stringify(formData));

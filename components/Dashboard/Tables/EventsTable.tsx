@@ -15,6 +15,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import OrganiserEventTable from "@/components/Tables/OrganiserEventTable";
+import { Button } from "react-day-picker";
+import DownloadEventsPDF from "@/components/Btns/DownloadEventsPDF";
 
 const invoices = [
   {
@@ -53,50 +56,41 @@ const invoices = [
     total_amount: 480000,
   },
 ];
+type ComponentProps = {
+  organiser: any[];
+};
 
-export function EventsTable() {
+export function EventsTable({ organiser }: ComponentProps) {
   return (
-    <Table>
-      <TableCaption>page 1 of your events</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Id</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Date</TableHead>
-          <TableHead>Tickets_Sold</TableHead>
-          <TableHead>Total Amount</TableHead>
-          <TableHead className="text-right">Action</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.id}>
-            <TableCell>{invoice.id}</TableCell>
-            <TableCell className="font-semibold">{invoice.name}</TableCell>
-            <TableCell>{invoice.date}</TableCell>
-            <TableCell>{invoice.total_tickets_sold}</TableCell>
-            <TableCell>{invoice.total_amount}</TableCell>
-            <TableCell className="text-right">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <PencilIcon size={20} />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Edit event</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </TableCell>
+    <>
+      <div className="flex justify-between items-center">
+        <h2 className="my-4 font-semibold text-xl">Events</h2>
+        {/* <Button>Download PDF</Button> */}
+        <DownloadEventsPDF />
+      </div>
+      <Table>
+        <TableCaption>page 1 of your events</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Id</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Date</TableHead>
+            <TableHead>Tickets_Sold</TableHead>
+            <TableHead>Total Amount</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">Kshs 2,500,000.00</TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {organiser?.map((org) => (
+            <OrganiserEventTable organiser={org} />
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell className="text-right"></TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </>
   );
 }

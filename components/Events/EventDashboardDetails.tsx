@@ -8,9 +8,10 @@ import { TicketTypeModal } from "../Modal/TicketTypeModal";
 type ComponentProps = {
   event: Event;
   session: string | undefined;
+  ttypes: any;
 };
 
-const EventDashboardDetails = ({ session, event }: ComponentProps) => {
+const EventDashboardDetails = ({ session, event, ttypes }: ComponentProps) => {
   return (
     <section className="flex flex-col sm:flex-row items-start gap-4 my-4">
       <div className="w-full sm:w-3/4 md:w-1/2">
@@ -33,13 +34,14 @@ const EventDashboardDetails = ({ session, event }: ComponentProps) => {
             </Link> */}
         </div>
       </div>
-
-      <div className=" mx-auto w-3/4 sm:w-1/2">
-        <div className="flex flex-col justify-center items-center p-4 border border-gray-300 rounded-2xl">
-          <p className="mb-4">You havent added your ticket types</p>
-          <TicketTypeModal session={session} eventId={+event?.event_id} />
+      {!ttypes && (
+        <div className=" mx-auto w-3/4 sm:w-1/2">
+          <div className="flex flex-col justify-center items-center p-4 border border-gray-300 rounded-2xl">
+            <p className="mb-4">You havent added your ticket types</p>
+            <TicketTypeModal session={session} eventId={+event?.event_id} />
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };

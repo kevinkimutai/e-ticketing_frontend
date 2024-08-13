@@ -4,6 +4,7 @@ import OrganiserSidebar from "@/components/Sidebar/OrganiserSidebar";
 import Sidebar from "@/components/Sidebar/OrganiserSidebar";
 import { getSessionUser } from "@/utils/authmiddleware/getSession";
 import { fetchOrganisersUser } from "@/utils/fetch/fetchEvents";
+import { getSession } from "@auth0/nextjs-auth0";
 import {
   Banknote,
   ChartNoAxesCombined,

@@ -44,7 +44,7 @@ const page = async ({ params }: { params: { event_id: string } }) => {
 
         {/* <TicketSalesChart /> */}
 
-        <AttendeesTable session={session} eventId={+event_id} ttypes={ttypes} />
+        <AttendeesTable session={session} eventId={+event_id} />
       </main>
     </>
   );

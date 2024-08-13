@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar/OrganiserSidebar";
 import { getSessionUser } from "@/utils/authmiddleware/getSession";
 import { fetchOrganisersUser } from "@/utils/fetch/fetchEvents";
 import {
+  Banknote,
   ChartNoAxesCombined,
   Contact,
   Headset,
@@ -16,11 +17,10 @@ import React from "react";
 
 const page = async () => {
   const session = await getSessionUser();
-  //Fetch Organiser/user
   const organiser = await fetchOrganisersUser(session);
-  //Fetch events/users
-  //Fetch Total attendees
-  //Fetch Total Sales
+
+  // @ts-ignore
+  const { user } = await getSession();
 
   console.log(organiser);
   return (
@@ -60,7 +60,7 @@ const page = async () => {
         <div className="flex items-center justify-between">
           <h1 className="text-xl">
             <span className="font-bold text-cyan-700 mr-2">Hi!</span>
-            <span className="font-semibold">Kevin Kimutai</span>
+            <span className="font-semibold capitalize">{user?.name}</span>
           </h1>
           <OrganiserSidebar />
         </div>
@@ -74,6 +74,18 @@ const page = async () => {
               <PartyPopper size={60} className="text-yellow-200" />
               <p className="text-white text-xl font-semibold">
                 {organiser?.total}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center p-4 border bg-cyan-700 border-slate-200 rounded-2xl cursor-pointer ">
+            <p className="font-bold text-right text-lg mb-4 text-white">
+              Sales
+            </p>
+            <div className="flex justify-between items-end">
+              <Banknote size={60} className="text-yellow-200" />
+              <p className="text-white text-xl font-semibold">
+                {organiser?.data?.total_amount_events}
               </p>
             </div>
           </div>

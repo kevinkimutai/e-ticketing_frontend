@@ -139,12 +139,9 @@ export const fetchUser = async (
   }
 };
 
-export const fetchAttendee = async (
-  attendeeId: number,
-  session: string | undefined
-) => {
+export const fetchAttendee = async (session: string | undefined) => {
   try {
-    const res = await fetch(`${APP_URL}/api/v1/attendee/${attendeeId}`, {
+    const res = await fetch(`${APP_URL}/api/v1/attendee/events`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -154,6 +151,7 @@ export const fetchAttendee = async (
 
     if (res.ok) {
       const { data } = await res.json();
+
       return data;
     } else {
       const data = await res.json();
@@ -265,6 +263,7 @@ export const fetchOrganisersUser = async (session: string | undefined) => {
 
     if (res.ok) {
       const data = await res.json();
+
       return data;
     } else {
       const data = await res.json();

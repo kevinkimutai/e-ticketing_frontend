@@ -63,14 +63,9 @@ const invoices = [
 type ComponentProps = {
   session: string | undefined;
   eventId: number;
-  ttypes: any;
 };
 
-export async function AttendeesTable({
-  session,
-  eventId,
-  ttypes,
-}: ComponentProps) {
+export async function AttendeesTable({ session, eventId }: ComponentProps) {
   const events = await fetchOrganiserEvent(eventId, session);
 
   return (

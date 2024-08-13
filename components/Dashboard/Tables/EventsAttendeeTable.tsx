@@ -8,50 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Pencil, PencilIcon } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { formatDate } from "@/utils/formatDate/formatDate";
 
-const invoices = [
-  {
-    id: "001",
-    name: "summertides",
-    date: "12-04-2026",
-    payment_id: "A00f326sdg",
-    tickets: 3,
-    amount: 3000,
-  },
-  {
-    id: "001",
-    name: "summertides",
-    date: "12-04-2026",
-    payment_id: "A00f326sdg",
-    tickets: 3,
-    amount: 3000,
-  },
-  {
-    id: "001",
-    name: "summertides",
-    date: "12-04-2026",
-    payment_id: "A00f326sdg",
-    tickets: 3,
-    amount: 3000,
-  },
-  {
-    id: "001",
-    name: "summertides",
-    date: "12-04-2026",
-    payment_id: "A00f326sdg",
-    tickets: 3,
-    amount: 3000,
-  },
-];
+type ComponentProps = {
+  events: any;
+};
 
-export function EventsAttendeeTable() {
+export function EventsAttendeeTable({ events }: ComponentProps) {
   return (
     <Table>
       <TableCaption>page 1 of your events</TableCaption>
@@ -66,21 +29,25 @@ export function EventsAttendeeTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.id}>
-            <TableCell>{invoice.id}</TableCell>
-            <TableCell className="font-semibold">{invoice.name}</TableCell>
-            <TableCell>{invoice.date}</TableCell>
-            <TableCell>{invoice.payment_id}</TableCell>
-            <TableCell>{invoice.tickets}</TableCell>
-            <TableCell className="text-right">{invoice.amount}</TableCell>
+        {events?.data?.map((event: any) => (
+          <TableRow key={event?.attendee_id}>
+            <TableCell>{event?.attendee_id}</TableCell>
+            <TableCell className="font-semibold">{event?.event_name}</TableCell>
+            <TableCell>{formatDate(event?.event_date)}</TableCell>
+            <TableCell>
+              {!event?.payment_id ? "Null" : event?.payment_id}
+            </TableCell>
+            <TableCell>{event?.quantity}</TableCell>
+            <TableCell className="text-right">{event?.total_amount}</TableCell>
           </TableRow>
         ))}
       </TableBody>
       <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">Kshs 9000.00</TableCell>
+          <TableCell className="text-right">
+            Kshs {events?.total_spent}.00
+          </TableCell>
         </TableRow>
       </TableFooter>
     </Table>

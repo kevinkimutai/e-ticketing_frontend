@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Eraser } from "lucide-react";
 import { TicketTypeModal } from "../Modal/TicketTypeModal";
+import { formatDate } from "@/utils/formatDate/formatDate";
 
 type ComponentProps = {
   event: Event;
@@ -17,7 +18,9 @@ const EventDashboardDetails = ({ session, event, ttypes }: ComponentProps) => {
       <div className="w-full sm:w-3/4 md:w-1/2">
         <div className="flex align-center justify-between mb-4">
           <h1 className="font-bold text-3xl">{event?.name}</h1>
-          <div className="text-sm font-semibold">{event?.date.toString()}</div>
+          <div className="text-sm font-semibold">
+            {formatDate(event?.date.toString())}
+          </div>
         </div>
         <div className="flex justify-end items-center gap-2">
           <Link href={"#"}>

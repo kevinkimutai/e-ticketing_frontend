@@ -19,45 +19,8 @@ import OrganiserEventTable from "@/components/Tables/OrganiserEventTable";
 import { Button } from "react-day-picker";
 import DownloadEventsPDF from "@/components/Btns/DownloadEventsPDF";
 
-const invoices = [
-  {
-    id: "001",
-    name: "summertides",
-    date: "12-04-2026",
-    total_tickets_sold: 300,
-    total_amount: 480000,
-  },
-  {
-    id: "001",
-    name: "summertides",
-    date: "12-04-2026",
-    total_tickets_sold: 300,
-    total_amount: 480000,
-  },
-  {
-    id: "001",
-    name: "summertides",
-    date: "12-04-2026",
-    total_tickets_sold: 300,
-    total_amount: 480000,
-  },
-  {
-    id: "001",
-    name: "summertides",
-    date: "12-04-2026",
-    total_tickets_sold: 300,
-    total_amount: 480000,
-  },
-  {
-    id: "001",
-    name: "summertides",
-    date: "12-04-2026",
-    total_tickets_sold: 300,
-    total_amount: 480000,
-  },
-];
 type ComponentProps = {
-  organiser: any[];
+  organiser: any;
 };
 
 export function EventsTable({ organiser }: ComponentProps) {
@@ -80,14 +43,16 @@ export function EventsTable({ organiser }: ComponentProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {organiser?.map((org) => (
+          {organiser?.data?.map((org: any) => (
             <OrganiserEventTable organiser={org} />
           ))}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
-            <TableCell className="text-right"></TableCell>
+            <TableCell className="text-right">
+              {organiser.total_amount_events}
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>

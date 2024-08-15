@@ -4,6 +4,8 @@ import OrganiserSidebar from "@/components/Sidebar/OrganiserSidebar";
 import Sidebar from "@/components/Sidebar/OrganiserSidebar";
 import { getSessionUser } from "@/utils/authmiddleware/getSession";
 import { fetchOrganisersUser } from "@/utils/fetch/fetchEvents";
+import { formatNumber } from "@/utils/formatCash/formatCash";
+import { formatDate } from "@/utils/formatDate/formatDate";
 import { getSession } from "@auth0/nextjs-auth0";
 import {
   Banknote,
@@ -86,7 +88,7 @@ const page = async () => {
             <div className="flex justify-between items-end">
               <Banknote size={60} className="text-yellow-200" />
               <p className="text-white text-xl font-semibold">
-                {organiser?.data?.total_amount_events}
+                {formatNumber(organiser?.data?.total_amount_events)}
               </p>
             </div>
           </div>

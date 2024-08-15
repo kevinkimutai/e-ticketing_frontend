@@ -44,7 +44,7 @@ export function EventsTable({ organiser }: ComponentProps) {
         </TableHeader>
         <TableBody>
           {organiser?.data?.map((org: any) => (
-            <OrganiserEventTable organiser={org} />
+            <OrganiserEventTable organiser={org} key={org?.organiser_id} />
           ))}
         </TableBody>
         <TableFooter>

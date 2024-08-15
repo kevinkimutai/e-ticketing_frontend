@@ -221,4 +221,8 @@ if (process.env.NEXT_PUBLIC_APP_ENVIRONMENT == "development") {
   APP_URL = "http://localhost:8000";
 }
 
+if (process.env.NEXT_PUBLIC_APP_ENVIRONMENT == "production") {
+  APP_URL = process.env.NEXT_PUBLIC_APP_PRODUCTION_URL!;
+}
+
 export default APP_URL;

@@ -1,22 +1,7 @@
 import React from "react";
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Pencil, PencilIcon } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { TableCell, TableRow } from "@/components/ui/table";
+
 import { fetchEvent, fetchOrganiserEvent } from "@/utils/fetch/fetchEvents";
 import { formatDate } from "@/utils/formatDate/formatDate";
 import { getSessionUser } from "@/utils/authmiddleware/getSession";
@@ -30,8 +15,6 @@ const OrganiserEventTable = async ({ organiser }: ComponentProps) => {
   const session = await getSessionUser();
   const event = await fetchEvent(session, organiser.event_id);
   const sums = await fetchOrganiserEvent(event?.event_id, session);
-
-  console.log("SUMS", sums);
 
   return (
     <TableRow key={event?.organiser_id}>

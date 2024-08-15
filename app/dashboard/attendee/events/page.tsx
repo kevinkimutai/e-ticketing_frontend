@@ -4,6 +4,7 @@ import AttendeeSidebar from "@/components/Sidebar/AttendeeSideBar";
 import Sidebar from "@/components/Sidebar/OrganiserSidebar";
 import { getSessionUser } from "@/utils/authmiddleware/getSession";
 import { fetchAttendee } from "@/utils/fetch/fetchEvents";
+import { formatNumber } from "@/utils/formatCash/formatCash";
 import { getSession } from "@auth0/nextjs-auth0";
 import {
   ChartNoAxesCombined,
@@ -79,7 +80,9 @@ const page = async () => {
             </p>
             <div className="flex justify-between items-end">
               <Coins size={60} className="text-cyan-700" />
-              <p className="text-xl font-semibold">{events?.total_spent}</p>
+              <p className="text-xl font-semibold">
+                {formatNumber(events?.total_spent)}
+              </p>
             </div>
           </div>
         </div>

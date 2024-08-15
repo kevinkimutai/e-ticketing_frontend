@@ -17,7 +17,13 @@ const Footer = () => {
       <div className="container relative z-10 mx-auto flex flex-col md:flex-row items-center justify-center">
         {/* Logo */}
         <div className="flex w-[300px] md:w-1/5 items-center justify-center mb-6">
-          <img src="/logo.png" alt="Logo" className="h-12" />
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            height={200}
+            width={200}
+            className="h-12"
+          />
         </div>
 
         {/* Page Links */}

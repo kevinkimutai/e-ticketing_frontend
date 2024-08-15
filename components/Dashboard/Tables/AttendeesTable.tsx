@@ -90,7 +90,7 @@ export async function AttendeesTable({ session, eventId }: ComponentProps) {
         </TableHeader>
         <TableBody>
           {events?.data?.map((e: any) => (
-            <EventAttendee event={e} />
+            <EventAttendee event={e} key={e?.attendee_id} />
           ))}
         </TableBody>
         <TableFooter>

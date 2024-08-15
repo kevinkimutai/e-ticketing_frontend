@@ -26,11 +26,12 @@ const Events = ({ events }: ComponentProps) => {
         //   className="w-full h-[20rem] object-fill"
         // />
         events?.map((event: Event) => (
-          <Link href={`/event/${event.event_id}`} className="">
-            <div
-              key={event.event_id.toString()}
-              className="flex flex-col border border-gray-500 shadow cursor-pointer max-w-[300px] mx-auto"
-            >
+          <Link
+            href={`/event/${event.event_id}`}
+            className=""
+            key={event.event_id.toString()}
+          >
+            <div className="flex flex-col border border-gray-500 shadow cursor-pointer max-w-[300px] mx-auto">
               <Image
                 alt={event.name}
                 src={event.poster_url}

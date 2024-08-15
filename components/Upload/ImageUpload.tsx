@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 //@ts-ignore
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../../config/firebase.config.js";
+import { storage } from "../../config/firebase.config";
 import Image from "next/image";
 import { ClipLoader } from "react-spinners";
 import { UploadCloud } from "lucide-react";

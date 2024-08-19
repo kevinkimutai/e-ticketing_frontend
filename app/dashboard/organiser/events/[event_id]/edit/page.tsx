@@ -57,6 +57,7 @@ export default function page() {
               </div>
               <div className="grid gap-2 w-full">
                 <Label htmlFor="category">Event Category</Label>
+                {/* @ts-ignore */}
                 <Select id="category">
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
@@ -72,6 +73,7 @@ export default function page() {
               </div>
               <div className="grid gap-2 w-full">
                 <Label htmlFor="location">Event Location</Label>
+                {/* @ts-ignore */}s
                 <Select id="location">
                   <SelectTrigger>
                     <SelectValue placeholder="Select location" />

@@ -93,12 +93,14 @@ export async function AttendeesTable({ session, eventId }: ComponentProps) {
             <EventAttendee event={e} key={e?.attendee_id} />
           ))}
         </TableBody>
-        <TableFooter>
+
+        {/* TODO:ADD Total kshs */}
+        {/* <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
             <TableCell className="text-right">Kshs 2,500.00</TableCell>
           </TableRow>
-        </TableFooter>
+        </TableFooter> */}
       </Table>
     </>
   );

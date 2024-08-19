@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { Eraser } from "lucide-react";
 import { TicketTypeModal } from "../Modal/TicketTypeModal";
 import { formatDate } from "@/utils/formatDate/formatDate";
+import { redirect } from "next/navigation";
 
 type ComponentProps = {
   event: Event;
@@ -23,7 +24,7 @@ const EventDashboardDetails = ({ session, event, ttypes }: ComponentProps) => {
           </div>
         </div>
         <div className="flex justify-end items-center gap-2">
-          <Link href={"#"}>
+          <Link href={"/dashboard/organiser/events/16/edit"}>
             <Button variant={"outline"} className="flex items-center">
               <Eraser className="text-red-400 mr-2" />
               <span className="font-semibold">Edit</span>

@@ -14,6 +14,7 @@ import { toast, Toaster } from "react-hot-toast";
 import APP_URL from "@/constants";
 import { ClipLoader } from "react-spinners";
 import { formatDate } from "@/utils/formatDate/formatDate";
+import { useRouter } from "next/navigation";
 
 type ComponentProps = {
   event: Event;
@@ -26,6 +27,8 @@ const EventDetails = ({ event, location, ttypes, session }: ComponentProps) => {
   const [eventCart, setEventCart] = useState<TicketOrderItems[]>([]);
   const [totalPrice, setTotalPrice] = useState<number | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
+
+  const router = useRouter();
 
   const cartHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -66,9 +69,13 @@ const EventDetails = ({ event, location, ttypes, session }: ComponentProps) => {
   };
 
   const submitHandler = async () => {
-    setLoading(true);
     const cart = { order_items: eventCart };
-    console.log(cart);
+
+    if (cart.order_items.length == 0) {
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const res = await fetch(`${APP_URL}/api/v1/ticket-order`, {
@@ -91,6 +98,9 @@ const EventDetails = ({ event, location, ttypes, session }: ComponentProps) => {
             backgroundColor: "#18A558",
           },
         });
+
+        router.push("/dashboard/attendee/events");
+
         setLoading(false);
       } else {
         setLoading(false);
@@ -113,10 +123,10 @@ const EventDetails = ({ event, location, ttypes, session }: ComponentProps) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row items-center justify-start md:items-start">
+      <div className="flex flex-col md:flex-row items-center justify-start md:items-start mt-10">
         <div className="w-[300px] rounded-md">
           <Image
-            src={event.poster_url}
+            src={event?.poster_url}
             alt={"poster"}
             width={400}
             height={400}
@@ -127,21 +137,21 @@ const EventDetails = ({ event, location, ttypes, session }: ComponentProps) => {
         <div className="w-full flex flex-col lg:flex-row">
           <div className=" w-full lg:w-3/5 py-4  px-6">
             <div className="flex justify-end">
-              <h1 className="text-2xl font-bold">{event.name}</h1>
+              <h1 className="text-2xl font-bold">{event?.name}</h1>
             </div>
             <p className="text-slate-500 mb-4">
-              {formatDate(event.date.toString())}
+              {formatDate(event?.date.toString())}
             </p>
             <ul className="mb-6">
               <li className="flex items-center p-2">
                 <Pin size={20} className="mr-2 text-red-400" />
                 <span className="font-semibold mr-6">Venue</span>
-                {event.location}
+                {event?.location}
               </li>
               <li className="flex items-center p-2">
                 <School size={20} className="mr-2 text-blue-400" />
                 <span className="font-semibold mr-6">Town</span>
-                {location.name}
+                {location?.name}
               </li>
               <li className="flex items-center p-2">
                 <Blocks size={20} className="mr-2 text-yellow-400" />
@@ -149,7 +159,7 @@ const EventDetails = ({ event, location, ttypes, session }: ComponentProps) => {
                 Concert
               </li>
             </ul>
-            <p className="text-gray-600">{event.description}</p>
+            <p className="text-gray-600">{event?.description}</p>
           </div>
           <div className="w-full lg:w-[450px] px-6 py-4">
             <div className="bg-yellow-200 rounded-2xl w-full h-fit shadow p-2 md:p-4">

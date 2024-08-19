@@ -5,10 +5,11 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Event, Locations } from "@/types";
 import APP_URL, { categoryIcons } from "@/constants";
 import Events from "../Events/Events";
+import Paginate from "../Paginate/Paginate";
 
 const IconComponent = ({ Icon, selected }: any) => (
   <Icon
-    className={`text-2xl mb-4 ${
+    className={`text-2xl mb-2 ${
       selected ? "text-black font-semibold" : "text-slate-800"
     }`}
   />
@@ -20,8 +21,8 @@ type ComponentProps = {
 
 const Categories = ({ session }: ComponentProps) => {
   const [selectedLabel, setSelectedLabel] = useState<Number | undefined>(1);
-  const [events, setEvents] = useState<Event[] | undefined>();
-  const [page, setPage] = useState<Number>(1);
+  const [events, setEvents] = useState<any>();
+  const [page, setPage] = useState<number>(1);
   const router = useRouter();
 
   const labelHandler = (label: number) => {
@@ -42,7 +43,7 @@ const Categories = ({ session }: ComponentProps) => {
       );
 
       if (res.ok) {
-        const { data } = await res.json();
+        const data = await res.json();
         setEvents(data);
       } else {
         const data = await res.json();
@@ -74,7 +75,7 @@ const Categories = ({ session }: ComponentProps) => {
         {categoryIcons.map(({ id, icon: Icon, label }) => (
           <div
             key={id}
-            className={`flex flex-col justify-center border border-yellow-400 rounded-lg p-4 items-center cursor-pointer transition-all ${
+            className={`flex flex-col justify-center border border-yellow-400 rounded-2xl p-2 items-center cursor-pointer transition-all ${
               id === selectedLabel ? "bg-yellow-200 scale-105" : ""
             }`}
             onClick={() => {
@@ -82,7 +83,7 @@ const Categories = ({ session }: ComponentProps) => {
             }}
           >
             <IconComponent Icon={Icon} selected={id === selectedLabel} />
-            <p className="text-slate-800 text-sm whitespace-nowrap pb-2 capitalize transition-all">
+            <p className="text-slate-800 text-sm whitespace-nowrap  capitalize transition-all">
               {label}
             </p>
           </div>
@@ -91,10 +92,16 @@ const Categories = ({ session }: ComponentProps) => {
 
       {/* Events */}
       <div className="flex justify-center items-center py-6">
-        <Events events={events} />
+        {/* @ts-ignore */}
+        <Events events={events?.data} />
       </div>
 
       {/* Pagination */}
+      <Paginate
+        numPage={events?.page}
+        totalPages={events?.number_of_pages}
+        setPage={setPage}
+      />
     </div>
   );
 };

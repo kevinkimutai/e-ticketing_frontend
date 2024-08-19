@@ -56,7 +56,7 @@ const Header = async () => {
   const user = session?.user;
 
   return (
-    <div className="flex justify-between items-center w-full px-2 sm:px-4 md:px-6 lg:px-12  py-2">
+    <div className="fixed flex justify-between items-center w-full px-2 sm:px-4 md:px-6 lg:px-12  py-2 z-50 bg-white">
       {/* Logo */}
       <Link href={"/"}>
         <Image
@@ -64,7 +64,7 @@ const Header = async () => {
           width={150}
           height={50}
           alt={"logo"}
-          // className="w-[120px]"
+          className="w-[110px] sm:w-[120px]"
         />
       </Link>
 
@@ -73,11 +73,11 @@ const Header = async () => {
           <NavigationMenuItem>
             <NavigationMenuTrigger>
               <div className="flex items-center justify-center">
-                <UserRound className="mr-2" /> {user?.name}
+                <UserRound className="mr-2" />
               </div>
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="w-[300px]">
+              <ul className="w-[300px] right-0">
                 {components.map((component) => (
                   <ListItem
                     key={component.title}

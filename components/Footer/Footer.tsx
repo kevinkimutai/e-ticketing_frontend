@@ -22,7 +22,7 @@ const Footer = () => {
             alt="Logo"
             height={200}
             width={200}
-            className="h-12"
+            className="w-1/2 object-contain"
           />
         </div>
 

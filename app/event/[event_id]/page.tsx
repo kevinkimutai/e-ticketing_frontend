@@ -16,12 +16,12 @@ import {
 } from "@/utils/fetch/fetchEvents";
 
 const page = async ({ params }: { params: { event_id: string } }) => {
-  const event_id = params.event_id;
+  const event_id = params?.event_id;
   const session = await getSessionUser();
 
   const event = await fetchEvent(session, +event_id);
   // Get Location
-  const location = await fetchLocation(session, event.location_id);
+  const location = await fetchLocation(session, event?.location_id);
   // Get Ticket Types
   const ttypes = await fetchTicketTypes(session, +event_id);
 
@@ -30,15 +30,14 @@ const page = async ({ params }: { params: { event_id: string } }) => {
       <Header />
       <Toaster />
       <main>
-        {/* <Header /> */}
-        <section className="px-2 sm:px-4 md:px-6 lg:px-12 ">
+        <section className="px-2 sm:px-4 md:px-6 lg:px-12  border border-blue-600">
           <EventDetails
             event={event}
             location={location}
             ttypes={ttypes}
             session={session}
           />
-          <EventMap latitude={event.latitude} longitude={event.longitude} />
+          <EventMap latitude={event?.latitude} longitude={event?.longitude} />
         </section>
         <Footer />
       </main>

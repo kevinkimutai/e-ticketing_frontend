@@ -20,7 +20,6 @@ const page = async ({ params }: { params: { event_id: string } }) => {
 
   const event = await fetchEvent(session, +event_id);
   const ttypes = await fetchTicketTypes(session, +event_id);
-  //const attendees = await fetchAttendees();
 
   return (
     <>

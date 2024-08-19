@@ -8,16 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Pencil, PencilIcon } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import OrganiserEventTable from "@/components/Tables/OrganiserEventTable";
-import { Button } from "react-day-picker";
-import DownloadEventsPDF from "@/components/Btns/DownloadEventsPDF";
 
 type ComponentProps = {
   organiser: any;
@@ -29,7 +21,7 @@ export function EventsTable({ organiser }: ComponentProps) {
       <div className="flex justify-between items-center">
         <h2 className="my-4 font-semibold text-xl">Events</h2>
         {/* <Button>Download PDF</Button> */}
-        <DownloadEventsPDF />
+        {/* <DownloadEventsPDF /> */}
       </div>
       <Table>
         <TableCaption>page 1 of your events</TableCaption>

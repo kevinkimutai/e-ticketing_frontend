@@ -14,6 +14,7 @@ import { Button } from "../ui/button";
 import APP_URL from "@/constants";
 import { Event, Locations } from "@/types";
 import { useRouter } from "next/navigation";
+import Paginate from "../Paginate/Paginate";
 
 type ComponentProps = {
   session: string | undefined;
@@ -25,8 +26,8 @@ const EventLocation = ({ session }: ComponentProps) => {
   const [location, setLocation] = useState<Number | undefined>(
     locations[4]?.location_id
   );
-  const [events, setEvents] = useState<Event[]>([]);
-  const [page, setPage] = useState<Number>(1);
+  const [events, setEvents] = useState<any>();
+  const [page, setPage] = useState<number>(1);
 
   const fetchLocations = async () => {
     try {
@@ -67,7 +68,7 @@ const EventLocation = ({ session }: ComponentProps) => {
       );
 
       if (res.ok) {
-        const { data } = await res.json();
+        const data = await res.json();
         setEvents(data);
       } else {
         const data = await res.json();
@@ -94,7 +95,6 @@ const EventLocation = ({ session }: ComponentProps) => {
             <Select
               onValueChange={(val) => {
                 setLocation(+val);
-                setPage(1);
               }}
               //defaultValue={"Nairobi"}
             >
@@ -114,19 +114,17 @@ const EventLocation = ({ session }: ComponentProps) => {
             </Select>
           </span>
         </h2>
-        <Button
-          variant={"outline"}
-          onClick={() => setPage((prevState) => +prevState + 1)}
-          className="hidden md:block"
-        >
-          View More
-        </Button>
       </div>
 
       {/* Events*/}
       <div className="flex justify-center items-center py-6">
-        <Events events={events} />
+        <Events events={events?.data} />
       </div>
+      <Paginate
+        numPage={events?.page}
+        totalPages={events?.number_of_pages}
+        setPage={setPage}
+      />
     </div>
   );
 };

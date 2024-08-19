@@ -39,7 +39,6 @@ export function EventModal({ session }: any) {
   const router = useRouter();
 
   const createEvent = async (event: Event | null) => {
-   
     try {
       const res = await fetch(`${APP_URL}/api/v1/event`, {
         method: "POST",
@@ -49,9 +48,19 @@ export function EventModal({ session }: any) {
         },
         body: JSON.stringify(event),
       });
-      const { data } = await res.json();
 
-      return data;
+      if (res.ok) {
+        const { data } = await res.json();
+        return data;
+      } else {
+        const data = await res.json();
+
+        console.log(data);
+
+        if (data.message == "Failedd To Verify Token") {
+          redirect("/api/auth/logout");
+        }
+      }
     } catch (error) {
       console.error("Error creating event:", error);
     }
@@ -64,12 +73,14 @@ export function EventModal({ session }: any) {
   const onNext = async (val: any) => {
     if (step == 7) {
       // Submit To BE
-      const e = { ...event, val };
+      const e = { ...event, ...val };
+
+      console.log(e);
 
       // @ts-ignore
       const data = await createEvent(e);
 
-      router.push(`/dashboard/organiser/event/${data.event_id}`);
+      router.push(`/dashboard/organiser/events/${data?.event_id}`);
     } else {
       setEvent((prevState) => {
         const newState = { ...prevState, ...val };
@@ -144,7 +155,11 @@ export function EventModal({ session }: any) {
           title="Event Venue"
           description="Add a descriptive address to venue"
         >
-          <EventInputLocation onNext={onNext} onBack={onBack} />
+          <EventInputLocation
+            session={session}
+            onNext={onNext}
+            onBack={onBack}
+          />
         </Modal>
       )}
 

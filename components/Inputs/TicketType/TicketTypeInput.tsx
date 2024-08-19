@@ -54,7 +54,7 @@ const TicketTypeInput = ({ session, eventId }: ComponentProps) => {
       );
 
       if (res.ok) {
-        router.push(`dashboard/organiser/event/${eventId}`);
+        router.refresh();
       } else {
         console.log(await res.json());
         throw new Error("failed ");

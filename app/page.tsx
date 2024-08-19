@@ -23,15 +23,17 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col py-2">
+    <>
       {/* Header */}
       <Header />
-      {/* Banner */}
-      <Banner session={session} />
-      <MainSection session={session} />
+      <main className="flex min-h-screen flex-col py-2 ">
+        {/* Banner */}
+        <Banner session={session} />
+        <MainSection session={session} />
 
-      {/* Footer */}
-      <Footer />
-    </main>
+        {/* Footer */}
+        <Footer />
+      </main>
+    </>
   );
 }

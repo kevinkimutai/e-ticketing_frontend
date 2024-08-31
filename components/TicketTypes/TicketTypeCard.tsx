@@ -1,10 +1,16 @@
 import {
+  Bone,
   Bug,
   Contact,
+  Dog,
+  FishSymbol,
+  PawPrint,
   PersonStanding,
   Shirt,
+  Snail,
   Squirrel,
   Turtle,
+  Worm,
 } from "lucide-react";
 import React from "react";
 
@@ -12,16 +18,27 @@ type ComponentProps = {
   ttypes: any;
 };
 
+const otherTtypes = [
+  <Worm key={0} size={60} className="text-cyan-700" />,
+  <Bone key={1} size={60} className="text-cyan-700" />,
+  <Snail key={2} size={60} className="text-cyan-700" />,
+  <Dog key={3} size={60} className="text-cyan-700" />,
+  <FishSymbol key={4} size={60} className="text-cyan-700" />,
+];
+
 const TicketTypeCard = ({ ttypes }: ComponentProps) => {
   const iconComponentType = (name: string) => {
-    if (name.toLowerCase() === "vvip") {
-      return <Bug size={60} className="text-cyan-700" />;
-    }
-    if (name.toLowerCase() === "vip") {
-      return <Squirrel size={60} className="text-cyan-700" />;
-    }
-    if (name.toLowerCase() === "regular") {
-      return <Turtle size={60} className="text-cyan-700" />;
+    const type = name.toLowerCase();
+    switch (type) {
+      case "vvip":
+        return <Bug size={60} className="text-cyan-700" />;
+      case "vip":
+        return <Squirrel size={60} className="text-cyan-700" />;
+      case "regular":
+        return <PawPrint size={60} className="text-cyan-700" />;
+      default:
+        // Get a random icon from the otherTypes array
+        return otherTtypes[Math.floor(Math.random() * otherTtypes.length)];
     }
   };
 

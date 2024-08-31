@@ -5,9 +5,8 @@ import Footer from "@/components/Footer/Footer";
 import EventDetails from "@/components/Events/EventDetails";
 import EventMap from "@/components/Events/EventMap";
 import Header from "@/components/Header/Header";
-import APP_URL from "@/constants";
+
 import { getSessionUser } from "@/utils/authmiddleware/getSession";
-import { redirect } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 import {
   fetchEvent,

@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Toaster } from "react-hot-toast";
 
 type ComponentProps = {
   title: string;
@@ -20,6 +21,7 @@ type ComponentProps = {
 const Modal = ({ title, description, children }: ComponentProps) => {
   return (
     <DialogContent className="w-4/5 sm:w-3/5 md:w-2/5 max-h-[80%]">
+      <Toaster />
       <DialogHeader>
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>

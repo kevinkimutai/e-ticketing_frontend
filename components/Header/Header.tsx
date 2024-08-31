@@ -32,12 +32,12 @@ const components: {
   {
     icon: LayoutDashboard,
     title: "Attendee Dashboard",
-    href: "/dashboard/attendee/user",
+    href: "/dashboard/attendee/events",
   },
   {
     icon: ChartNoAxesCombined,
     title: "Organiser Dashboard",
-    href: "/dashboard/organiser/organiser",
+    href: "/dashboard/organiser/events",
   },
   {
     icon: Contact,

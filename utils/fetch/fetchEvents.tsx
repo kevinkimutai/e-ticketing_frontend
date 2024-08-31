@@ -1,5 +1,6 @@
 import APP_URL from "@/constants";
 import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 export const fetchEvents = async (session: string) => {
   try {
@@ -139,9 +140,19 @@ export const fetchUser = async (
   }
 };
 
-export const fetchAttendee = async (session: string | undefined) => {
+export const fetchAttendee = async (
+  session: string | undefined,
+  page: number
+) => {
+  let fetchUrl;
   try {
-    const res = await fetch(`${APP_URL}/api/v1/attendee/events`, {
+    if (page) {
+      fetchUrl = `${APP_URL}/api/v1/attendee/events?page=${page}`;
+    } else {
+      fetchUrl = `${APP_URL}/api/v1/attendee/events`;
+    }
+
+    const res = await fetch(fetchUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -150,7 +161,7 @@ export const fetchAttendee = async (session: string | undefined) => {
     });
 
     if (res.ok) {
-      const { data } = await res.json();
+      const data = await res.json();
 
       return data;
     } else {
@@ -251,9 +262,20 @@ export const fetchTicketOrderItem = async (
     console.error("Error fetching attendee:", error);
   }
 };
-export const fetchOrganisersUser = async (session: string | undefined) => {
+export const fetchOrganisersUser = async (
+  session: string | undefined,
+  page: number
+) => {
+  let fetchUrl;
+
   try {
-    const res = await fetch(`${APP_URL}/api/v1/organiser/user`, {
+    if (page) {
+      fetchUrl = `${APP_URL}/api/v1/organiser/user?page=${page}`;
+    } else {
+      fetchUrl = `${APP_URL}/api/v1/organiser/user`;
+    }
+
+    const res = await fetch(fetchUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -279,10 +301,17 @@ export const fetchOrganisersUser = async (session: string | undefined) => {
 
 export const fetchOrganiserEvent = async (
   eventId: number,
-  session: string | undefined
+  session: string | undefined,
+  page: number | undefined
 ) => {
+  let fetchUrl;
   try {
-    const res = await fetch(`${APP_URL}/api/v1/organiser/event/${eventId}`, {
+    if (page) {
+      fetchUrl = `${APP_URL}/api/v1/organiser/event/${eventId}?page=${page}`;
+    } else {
+      fetchUrl = `${APP_URL}/api/v1/organiser/event/${eventId}`;
+    }
+    const res = await fetch(fetchUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -292,6 +321,7 @@ export const fetchOrganiserEvent = async (
 
     if (res.ok) {
       const data = await res.json();
+
       return data;
     } else {
       const data = await res.json();
@@ -302,5 +332,99 @@ export const fetchOrganiserEvent = async (
     }
   } catch (error) {
     console.error("Error fetching attendee:", error);
+  }
+};
+
+export const downloadAttendeeEvent = async (
+  eventId: number,
+  session: string | undefined
+) => {
+  let fetchUrl;
+  try {
+    const res = await fetch(
+      `${APP_URL}/api/v1/organiser/event/${eventId}/download`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session}`,
+        },
+      }
+    );
+
+    if (res.ok) {
+      const data = await res.json();
+
+      return data;
+    } else {
+      const data = await res.json();
+
+      if (data.message == "Failedd To Verify Token") {
+        redirect("/api/auth/logout");
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching attendee:", error);
+  }
+};
+
+export const fetchLocations = async (session: string | undefined) => {
+  try {
+    const res = await fetch(`${APP_URL}/api/v1/location`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session}`,
+      },
+    });
+
+    if (res.ok) {
+      const { data } = await res.json();
+      return data;
+    } else {
+      const data = await res.json();
+
+      if (data.message == "Failedd To Verify Token") {
+        redirect("/api/auth/logout");
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+  }
+};
+
+export const fetchTicketOrder = async (
+  session: string | undefined,
+  orderId: number
+) => {
+  try {
+    const res = await fetch(`${APP_URL}/api/v1/usher/order/${orderId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session}`,
+      },
+    });
+
+    if (res.ok) {
+      const { data } = await res.json();
+
+      return data;
+    } else {
+      const data = await res.json();
+
+      if (data.code == 401) {
+        toast.error(`${data.message}`, {
+          position: "top-right",
+        });
+        redirect("/api/auth/logout");
+      }
+
+      if (data.message == "Failedd To Verify Token") {
+        redirect("/api/auth/logout");
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching usher/order:", error);
   }
 };

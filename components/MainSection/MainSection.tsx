@@ -32,6 +32,7 @@ const MainSection = ({ session }: ComponentProps) => {
 
       if (res.ok) {
         const { data } = await res.json();
+
         setEvents(data);
       } else {
         const data = await res.json();
@@ -65,7 +66,7 @@ const MainSection = ({ session }: ComponentProps) => {
         </>
       )}
 
-      {searchTerm && events?.length == 0 && (
+      {searchTerm && (events?.length == 0 || !events) && (
         <div className="flex justify-center items-center">
           <div className=" flex justify-center items-center text-center rounded-2xl border border-black======= h-[150px] mb-4 w-1/2">
             <p className="font-semibold">No such events.Try another search</p>
@@ -73,7 +74,7 @@ const MainSection = ({ session }: ComponentProps) => {
         </div>
       )}
       {searchTerm && events?.length > 0 && (
-        <div className="px-2 sm:px-4 md:px-6 lg:px-12 py-6">
+        <div className="flex justify-center items-center px-2 sm:px-4 md:px-6 lg:px-12 py-6">
           <Events events={events} />
           {/* <Paginate /> */}
         </div>

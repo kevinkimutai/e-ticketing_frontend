@@ -12,13 +12,15 @@ import {
   MapCameraChangedEvent,
   Marker,
 } from "@vis.gl/react-google-maps";
+import { ClipLoader } from "react-spinners";
 
 type ComponentProps = {
   onBack: () => void;
   onNext: (val: any) => Promise<void>;
+  loading: boolean;
 };
 
-const EventInputMap = ({ onBack, onNext }: ComponentProps) => {
+const EventInputMap = ({ onBack, onNext, loading }: ComponentProps) => {
   const [markerPosition, setMarkerPosition] = useState<any | null>(null);
 
   const handleMapClick = (event: any) => {
@@ -69,8 +71,6 @@ const EventInputMap = ({ onBack, onNext }: ComponentProps) => {
 
           <Button
             onClick={() => {
-              console.log(markerPosition);
-
               if (markerPosition) {
                 onNext({
                   latitude: markerPosition.lat,
@@ -78,8 +78,9 @@ const EventInputMap = ({ onBack, onNext }: ComponentProps) => {
                 });
               }
             }}
+            disabled={loading}
           >
-            Create
+            {loading ? <ClipLoader color="#ffff" size={15} /> : "Create"}
           </Button>
         </div>
       </DialogFooter>

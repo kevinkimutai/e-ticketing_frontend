@@ -30,12 +30,6 @@ const EventDashboardDetails = ({ session, event, ttypes }: ComponentProps) => {
               <span className="font-semibold">Edit</span>
             </Button>
           </Link>
-          {/* <Link href={"#"}>
-              <Button variant={"destructive"} className="flex items-center">
-                <Trash2 className=" mr-2" />
-                <span className="font-semibold">Delete</span>
-              </Button>
-            </Link> */}
         </div>
       </div>
       {!ttypes && (

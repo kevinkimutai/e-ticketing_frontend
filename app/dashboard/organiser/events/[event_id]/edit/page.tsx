@@ -20,82 +20,33 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/Header/Header";
 import Image from "next/image";
 
-import IllustratorImg from "../../../../../../public/Sandy_Bus-05_Single-08.jpg";
+import IllustratorImg from "../../../../../../public/Pen tool-amico.svg";
 import Footer from "@/components/Footer/Footer";
+import APP_URL from "@/constants";
+import {
+  fetchEvent,
+  fetchLocation,
+  fetchLocations,
+} from "@/utils/fetch/fetchEvents";
+import { getSessionUser } from "@/utils/authmiddleware/getSession";
+import EditEventForm from "@/components/Form/EditEventForm";
+import { Toaster } from "react-hot-toast";
 
-export default function page() {
+export default async function page({
+  params,
+}: {
+  params: { event_id: string };
+}) {
+  const session = await getSessionUser();
+  const event = await fetchEvent(session, +params.event_id);
+  const locations = await fetchLocations(session);
+
   return (
     <>
       <Header />
-
-      <p className="text-red-600">Route not defined yet</p>
-      <section className="flex flex-col md:flex-row items-center justify-center min-h-screen px-3 sm:px-6 md:px-12 lg:px-24 py-2 sm:py-4">
-        <Card className="w-full md:w-1/2 mt-10">
-          <CardHeader>
-            <CardTitle>Edit Event</CardTitle>
-            <CardDescription>Edit Your Event</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form className="grid gap-6">
-              <div className="grid gap-4 w-full">
-                <div className="grid gap-2 w-full">
-                  <Label htmlFor="title">Event Name</Label>
-                  <Input id="title" placeholder="Enter event title" />
-                </div>
-                <div className="grid gap-2 w-full">
-                  <Label htmlFor="location">Location</Label>
-                  <Input id="location" placeholder="Enter event location" />
-                </div>
-                <div className="grid gap-2 w-full">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    rows={4}
-                    placeholder="Describe your event"
-                  />
-                </div>
-              </div>
-              <div className="grid gap-2 w-full">
-                <Label htmlFor="category">Event Category</Label>
-                {/* @ts-ignore */}
-                <Select id="category">
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="conference">Conference</SelectItem>
-                    <SelectItem value="meetup">Meetup</SelectItem>
-                    <SelectItem value="workshop">Workshop</SelectItem>
-                    <SelectItem value="party">Party</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid gap-2 w-full">
-                <Label htmlFor="location">Event Location</Label>
-                {/* @ts-ignore */}s
-                <Select id="location">
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select location" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="san-francisco">San Francisco</SelectItem>
-                    <SelectItem value="new-york">New York</SelectItem>
-                    <SelectItem value="london">London</SelectItem>
-                    <SelectItem value="tokyo">Tokyo</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </form>
-          </CardContent>
-          <CardFooter>
-            <div className="flex w-full  justify-end gap-2">
-              <Button variant="outline">Cancel</Button>
-              <Button type="submit">Edit Event</Button>
-            </div>
-          </CardFooter>
-        </Card>
+      <Toaster />
+      <section className="flex flex-col md:flex-row items-center justify-center min-h-screen w-full md:w-2/3 px-3 sm:px-6 md:px-12 mx-auto  py-2 sm:py-4">
+        <EditEventForm event={event} locations={locations} session={session} />
         <div className="w-full md:w-1/2">
           <Image
             src={IllustratorImg}

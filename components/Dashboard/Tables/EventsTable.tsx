@@ -10,6 +10,11 @@ import {
 } from "@/components/ui/table";
 
 import OrganiserEventTable from "@/components/Tables/OrganiserEventTable";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import qs from "query-string";
+import { useState } from "react";
+import Paginate from "@/components/Paginate/Paginate";
+import DashboardPaginate from "@/components/Paginate/DashboardPaginate";
 
 type ComponentProps = {
   organiser: any;
@@ -24,7 +29,7 @@ export function EventsTable({ organiser }: ComponentProps) {
         {/* <DownloadEventsPDF /> */}
       </div>
       <Table>
-        <TableCaption>page 1 of your events</TableCaption>
+        {/* {page && <TableCaption>page {page} of your events</TableCaption>} */}
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Id</TableHead>
@@ -35,7 +40,7 @@ export function EventsTable({ organiser }: ComponentProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {organiser?.data?.map((org: any) => (
+          {organiser?.data?.data?.map((org: any) => (
             <OrganiserEventTable organiser={org} key={org?.organiser_id} />
           ))}
         </TableBody>
@@ -43,11 +48,16 @@ export function EventsTable({ organiser }: ComponentProps) {
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
             <TableCell className="text-right">
-              {organiser.total_amount_events}
+              {organiser?.data?.total_amount_events}
             </TableCell>
           </TableRow>
         </TableFooter>
       </Table>
+      <DashboardPaginate
+        // setPage={handlePageChange}
+        numPage={organiser?.page}
+        totalPages={organiser?.number_of_pages}
+      />
     </>
   );
 }

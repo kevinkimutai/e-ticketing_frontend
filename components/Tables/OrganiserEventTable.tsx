@@ -14,7 +14,7 @@ type ComponentProps = {
 const OrganiserEventTable = async ({ organiser }: ComponentProps) => {
   const session = await getSessionUser();
   const event = await fetchEvent(session, organiser.event_id);
-  const sums = await fetchOrganiserEvent(event?.event_id, session);
+  const sums = await fetchOrganiserEvent(event?.event_id, session, 1);
 
   return (
     <TableRow key={event?.organiser_id}>
@@ -28,9 +28,9 @@ const OrganiserEventTable = async ({ organiser }: ComponentProps) => {
         </Link>
       </TableCell>
       <TableCell>{formatDate(event?.date.toString())}</TableCell>
-      <TableCell>{sums?.tickets_sold}</TableCell>
+      <TableCell>{sums?.data?.tickets_sold}</TableCell>
 
-      <TableCell>{sums?.total_amount}</TableCell>
+      <TableCell>{sums?.data?.total_amount}</TableCell>
     </TableRow>
   );
 };

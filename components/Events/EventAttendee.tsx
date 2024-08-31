@@ -22,6 +22,7 @@ const EventAttendee = async ({ event }: ComponentProps) => {
         <TableCell>{event?.quantity}</TableCell>
         <TableCell>{event?.ticket_type_name}</TableCell>
         <TableCell>Paid</TableCell>
+        <TableCell>{event?.admitted}</TableCell>
         <TableCell className="text-right">{event?.total}</TableCell>
       </TableRow>
     </>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
@@ -21,6 +21,7 @@ import EventToTime from "../Inputs/Events/EventToTime";
 import { Event } from "@/types";
 import APP_URL from "@/constants";
 import { redirect, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 enum STEPS {
   NAME = 0,
@@ -36,10 +37,12 @@ enum STEPS {
 export function EventModal({ session }: any) {
   const [step, setStep] = useState<STEPS>(STEPS.NAME);
   const [event, setEvent] = useState<Event | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const createEvent = async (event: Event | null) => {
     try {
+      setLoading(true);
       const res = await fetch(`${APP_URL}/api/v1/event`, {
         method: "POST",
         headers: {
@@ -51,18 +54,34 @@ export function EventModal({ session }: any) {
 
       if (res.ok) {
         const { data } = await res.json();
+
+        toast.success("Event created successfully", {
+          icon: <Check />,
+          position: "top-right",
+          style: {
+            border: "1px solid #750000",
+            padding: "16px",
+            color: "#FFF3D9",
+            backgroundColor: "#18A558",
+          },
+        });
+        setLoading(false);
         return data;
       } else {
         const data = await res.json();
 
-        console.log(data);
-
         if (data.message == "Failedd To Verify Token") {
           redirect("/api/auth/logout");
         }
+        toast.error(`Error: ${data.message || "Failed to create event."}`, {
+          position: "top-right",
+        });
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error creating event:", error);
+
+      setLoading(false);
     }
   };
 
@@ -168,7 +187,7 @@ export function EventModal({ session }: any) {
           title="Finally Event Map Location"
           description="Allow your attendees to use maps for location"
         >
-          <EventInputMap onNext={onNext} onBack={onBack} />
+          <EventInputMap onNext={onNext} onBack={onBack} loading={loading} />
         </Modal>
       )}
     </Dialog>

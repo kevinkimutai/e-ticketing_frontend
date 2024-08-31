@@ -6,20 +6,14 @@ import { getSessionUser } from "@/utils/authmiddleware/getSession";
 import { fetchAttendee } from "@/utils/fetch/fetchEvents";
 import { formatNumber } from "@/utils/formatCash/formatCash";
 import { getSession } from "@auth0/nextjs-auth0";
-import {
-  ChartNoAxesCombined,
-  Coins,
-  Contact,
-  Headset,
-  PartyPopper,
-} from "lucide-react";
+import { ChartNoAxesCombined, Coins, Headset, PartyPopper } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const page = async () => {
+const page = async ({ searchParams }: any) => {
   const session = await getSessionUser();
-  const events = await fetchAttendee(session);
+  const events = await fetchAttendee(session, searchParams?.page);
 
   // @ts-ignore
   const { user } = await getSession();
@@ -70,7 +64,9 @@ const page = async () => {
             </p>
             <div className="flex justify-between items-end">
               <PartyPopper size={60} className="text-cyan-700" />
-              <p className="text-xl font-semibold">{events?.total_events}</p>
+              <p className="text-xl font-semibold">
+                {events?.data?.total_events}
+              </p>
             </div>
           </div>
 
@@ -81,7 +77,7 @@ const page = async () => {
             <div className="flex justify-between items-end">
               <Coins size={60} className="text-cyan-700" />
               <p className="text-xl font-semibold">
-                {formatNumber(events?.total_spent)}
+                {formatNumber(events?.data?.total_spent)}
               </p>
             </div>
           </div>

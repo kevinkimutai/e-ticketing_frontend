@@ -21,7 +21,7 @@ export function TicketTypeModal({ session, eventId }: ComponentProps) {
 
       <Modal
         title="Add Your Ticket-Types"
-        description="We offer the following ticket types (Regular,VIP,VVIP)"
+        description="You can choose a variety of ticket-types (Regular,VIP,VVIP)"
       >
         <TicketTypeInput session={session} eventId={eventId} />
       </Modal>

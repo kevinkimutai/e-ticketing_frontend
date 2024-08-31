@@ -32,24 +32,26 @@ const ticketSalesData = [
 
 const TicketSalesChart = () => {
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <LineChart
-        data={ticketSalesData}
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="month" angle={-45} textAnchor="end" interval={0} />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="sales"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-      </LineChart>
-    </ResponsiveContainer>
+    <div className="w-2/3">
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart
+          data={ticketSalesData}
+          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="month" angle={-45} textAnchor="end" interval={0} />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="sales"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 
